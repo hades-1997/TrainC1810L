@@ -13,79 +13,10 @@
                     </div>
                 </div>
             </div>
-            <div class="search-home-tab">
-                <div class="tab">
-                    <button class="tablinks active" onclick="openTab(event, 'vieclam')">Thông Tin Hành Trình</button>
-                    <button class="tablinks" onclick="openTab(event, 'xkld')">Tra Cứu Vé</button>
-                </div>
-                <div id="vieclam" class="tabcontent active">
-                    <form method="get" id="searchform" class="search-company-form" asp-action="ShowTrain">
-                        <div class="company-type">
-                            <ul class="list-company">
-                                <li class="item-company">
-                                    <label class="title-company">
-                                        <input type="radio" name="company_type" value="xkld" checked="checked">
-                                        <span class="radio-field-text">Một Chiều</span>
-                                    </label>
-                                </li>
-                                <li class="item-company">
-                                    <label class="title-company">
-                                        <input type="radio" name="company_type" value="tchtdk">
-                                        <span class="radio-field-text">Khứ Hồi</span>
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
-                        <span class="span-area_tag span-select" id="span-area_tag">
-                            <select name="routefrom" class="area_tag">
-                                <option value="">Ga Đi</option> 
-                                <option value="hanoi">Hà Nội</option>
-                                <option value="saigon">Sài Gòn</option>
-                            </select>
-                        </span>
-                        <span class="span-area_tag span-select" id="span-area_tag">
-                            <select name="routeto" class="area_tag">
-                                <option value="">Ga Đến</option>
-                                @foreach (var item in Model)
-                                {
-                                <option value="@item.train.RouteFromTo">@Html.DisplayFor(modelItem => item.train.RouteFromTo)</option>
-                                }
-                            </select>
-                        </span>
-                        <input style="float: none;" type="date" name="setTodaysDate">
-                        <input style="float: none;" type="date" value="">
-                        <input type="submit" value="Tìm kiếm">
-                    </form>
-                </div>
-                <div id="xkld" class="tabcontent">
 
-                    <form method="get" id="searchform" class="search-company-form" action="">
-                        <div class="company-type">
-                            Trang Website đang phát triển
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="section new-post">
-                <ul>
-                    @foreach (var item in Model)
-                    {
-        <li>
-            <a href="">
-                <time datetime="@Html.DisplayFor(modelItem => item.train.DepartureTime)">@Html.DisplayFor(modelItem => item.train.DepartureTime)</time>
-                <span>
-                    @Html.DisplayFor(modelItem => item.train.Field)
-                </span>
-            </a>
-        </li>
-}
-
-                </ul>
-                <p class="link"><a href="">Xem tất cả</a></p>
-            </div>
-            <div class="section job">
+            <div class="section job" style="padding-top: 30px;">
                 <div class="wrap">
-                    <div class="section-title"><span>Các chuyến xe trong mới nhất</span></div>
+                    <div class="section-title"><span>Các chuyến xe </span></div>
                     <div class="special-interns special-skills">
                         <!--<h2 class="section-subtitle"><span>Thực tập sinh</span></h2>-->
                         <ul class="slider-homepage content-loop">
@@ -103,12 +34,13 @@
                             @*<ul class="occupation font-awesome"><li></li></ul>*@
                         </div>
                     </a>
-                </li>
-}
+                </li>}
                         </ul>
                     </div>
                 </div>
             </div>
+
+
             <div class="work_scenery">
                 <div class="wrap">
                     <div class="wrap-content">

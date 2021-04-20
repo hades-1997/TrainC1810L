@@ -24,7 +24,7 @@ namespace SpoorC1810L.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = await _context.TrainRoute.Include(p => p.train).Take(6).ToListAsync();
+            var applicationDbContext = await _context.TrainRoute.Include(p => p.train).Include(p => p.station).Take(6).ToListAsync();
             return View(applicationDbContext);
         }
 
@@ -37,6 +37,19 @@ namespace SpoorC1810L.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult SearchTrain()
+        {
+            return View();
+        }
+
+        //POST/home/showtrain
+
+        public async Task<IActionResult> ShowTrain(string routefrom, string routeto)
+        {
+              
+            return View("SearchTrain", await _context.TrainRoute.Include(p => p.train).Include(p => p.station).Where(t => t.train.RouteFromTo.Contains(routeto)).Take(6).ToListAsync());
         }
     }
 }
