@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrainC1810L", "SpoorC1810L\TrainC1810L.csproj", "{1E83ACDE-F1A9-41F4-BA28-F1A5EACE723D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1E83ACDE-F1A9-41F4-BA28-F1A5EACE723D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E83ACDE-F1A9-41F4-BA28-F1A5EACE723D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E83ACDE-F1A9-41F4-BA28-F1A5EACE723D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E83ACDE-F1A9-41F4-BA28-F1A5EACE723D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F737BCAB-DDCE-4CFD-B612-3783346F6057}
+	EndGlobalSection
+EndGlobal

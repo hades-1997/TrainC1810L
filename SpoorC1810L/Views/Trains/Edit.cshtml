@@ -1,0 +1,85 @@
+﻿@model SpoorC1810L.Models.Train
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_SiderBar.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Train</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Field" class="control-label"></label>
+                <input asp-for="Field" class="form-control" />
+                <span asp-validation-for="Field" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TrainNo" class="control-label"></label>
+                <input asp-for="TrainNo" class="form-control" />
+                <span asp-validation-for="TrainNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TrainName" class="control-label"></label>
+                <input asp-for="TrainName" class="form-control" />
+                <span asp-validation-for="TrainName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RouteFromTo" class="control-label"></label>
+                <input asp-for="RouteFromTo" class="form-control" />
+                <span asp-validation-for="RouteFromTo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DepartureTime" class="control-label"></label>
+                <input asp-for="DepartureTime" class="form-control" />
+                <span asp-validation-for="DepartureTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Compartment" class="control-label"></label>
+                <input asp-for="Compartment" class="form-control" />
+                <span asp-validation-for="Compartment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OneAC" class="control-label"></label>
+                <input asp-for="OneAC" class="form-control" />
+                <span asp-validation-for="OneAC" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TwoAC" class="control-label"></label>
+                <input asp-for="TwoAC" class="form-control" />
+                <span asp-validation-for="TwoAC" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ThreeAC" class="control-label"></label>
+                <input asp-for="ThreeAC" class="form-control" />
+                <span asp-validation-for="ThreeAC" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sleeper" class="control-label"></label>
+                <input asp-for="Sleeper" class="form-control" />
+                <span asp-validation-for="Sleeper" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="General" class="control-label"></label>
+                <input asp-for="General" class="form-control" />
+                <span asp-validation-for="General" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

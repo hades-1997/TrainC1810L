@@ -1,0 +1,144 @@
+﻿@model IEnumerable<SpoorC1810L.Models.TrainRoute>
+
+<div id="content">
+    <div class="wrap">
+        <div id="main" class="col-md-8" role="main">
+            <div class="session banner-home">
+                <div class="slick-1">
+                    <div class="item">
+                        <div class="wrap pc background-home" style="">
+                            <div class="content-slider">
+                                Trang web VETAUHOA nhằm đáp ứng nhu cầu mua vé tùa tại Việt Nam.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="search-home-tab">
+                <div class="tab">
+                    <button class="tablinks active" onclick="openTab(event, 'vieclam')">Thông Tin Hành Trình</button>
+                    <button class="tablinks" onclick="openTab(event, 'xkld')">Tra Cứu Vé</button>
+                </div>
+                <div id="vieclam" class="tabcontent active">
+                    <form method="get" id="searchform" class="search-company-form" action="">
+                        <div class="company-type">
+
+                            <ul class="list-company">
+                                <li class="item-company">
+                                    <label class="title-company">
+                                        <input type="radio" name="company_type" value="xkld" checked="checked">
+                                        <span class="radio-field-text">Một Chiều</span>
+                                    </label>
+                                </li>
+                                <li class="item-company">
+                                    <label class="title-company">
+                                        <input type="radio" name="company_type" value="tchtdk">
+                                        <span class="radio-field-text">Khứ Hồi</span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                        <span class="span-area_tag span-select" id="span-area_tag">
+                            <select name="area_tag" class="area_tag">
+                                <option value="">Ga Đi</option>
+                                <option value="vungtau">Bà Rịa-Vũng Tàu</option>
+                                <option value="binhduong">Bình Dương</option>
+                                <option value="cantho">Cần Thơ</option>
+                                <option value="danang">Đà Nẵng</option>
+                                <option value="hanoi">Hà Nội</option>
+                                <option value="ho-chi-minh">Hồ Chí Minh</option>
+                            </select>
+                        </span>
+                        <span class="span-area_tag span-select" id="span-area_tag">
+                            <select name="area_tag" class="area_tag">
+                                <option value="">Ga Đến</option>
+                                <option value="vungtau">Bà Rịa-Vũng Tàu</option>
+                                <option value="binhduong">Bình Dương</option>
+                                <option value="cantho">Cần Thơ</option>
+                                <option value="danang">Đà Nẵng</option>
+                                <option value="hanoi">Hà Nội</option>
+                                <option value="ho-chi-minh">Hồ Chí Minh</option>
+                            </select>
+                        </span>
+                        <input style="float: none;" type="date" name="setTodaysDate">
+                        <input style="float: none;" type="date" value="">
+                        <input type="submit" value="Tìm kiếm">
+                    </form>
+                </div>
+                <div id="xkld" class="tabcontent">
+
+                    <form method="get" id="searchform" class="search-company-form" action="">
+                        <div class="company-type">
+                            Trang Website đang phát triển
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="section new-post">
+                <ul>
+                    @foreach (var item in Model)
+                    {
+        <li>
+            <a href="">
+                <time datetime="@Html.DisplayFor(modelItem => item.train.DepartureTime)">@Html.DisplayFor(modelItem => item.train.DepartureTime)</time>
+                <span>
+                    @Html.DisplayFor(modelItem => item.train.Field)
+                </span>
+            </a>
+        </li>}
+
+                </ul>
+                <p class="link"><a href="">Xem tất cả</a></p>
+            </div><div class="section job">
+                <div class="wrap">
+                    <div class="section-title"><span>Các chuyến xe trong mới nhất</span></div>
+                    <div class="special-interns special-skills">
+                        <!--<h2 class="section-subtitle"><span>Thực tập sinh</span></h2>-->
+                        <ul class="slider-homepage content-loop">
+                            @foreach (var item in Model)
+                            {
+                <li class="job-box">
+                    <a class="clearfix" href="">
+                        <span class="new-mark">new</span>
+                        <div class="content">
+                            <h2 class="title-new">
+                                @Html.DisplayFor(modelItem => item.train.Field)
+                            </h2>
+                            <p class="salary">1.000.000 - 1.500.000 VND</p>
+                            <p class="local font-awesome">@Html.DisplayFor(modelItem => item.train.RouteFromTo)</p>
+                            @*<ul class="occupation font-awesome"><li></li></ul>*@
+                        </div>
+                    </a>
+                </li>}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="work_scenery">
+                <div class="wrap">
+                    <div class="wrap-content">
+                        <div class="title">Quy Định Đổi Trả Vé Tàu</div>
+                        <div class="content">
+                            <div class="content-text">
+                                <div class="panel-body">
+                                    <p>1. Thời gian, mức phí đổi trả vé:</p>
+                                    <p>- Đổi vé: Vé cá nhân đổi trước giờ tàu chạy 24 giờ trở lên, lệ phí là 20.000 đồng/vé; không áp dụng đổi vé đối với vé tập thể.</p>
+                                    <p>- Trả vé:</p>
+                                    <p>&nbsp; &nbsp; + Vé cá nhân: Trả vé trước giờ tàu chạy từ 4 giờ đến dưới 24 giờ, lệ phí là 20% giá vé; từ 24 giờ trở lên lệ phí là 10% giá vé.</p>
+                                    <p>&nbsp; &nbsp; + Vé tập thể: Trả vé trước giờ tàu chạy từ 24 giờ đến dưới 72 giờ, lệ phí là 20% giá vé; từ 72 giờ trở lên lệ phí là 10% giá vé.</p>
+                                    <p>2. Hình thức trả vé.</p>
+                                    <p>- Khi hành khách mua vé và thanh toán online qua website bán vé của Ngành Đường sắt, app bán vé hoặc các ứng dụng mua vé tàu hỏa của các đối tác thứ ba thì có thể trả vé online qua các website bán vé của Ngành Đường sắt hoặc đến trực tiếp nhà ga.</p>
+                                    <p>- Khi hành khách mua vé bằng các hình thức khác, muốn đổi vé, trả vé hành khách đến trực tiếp nhà ga kèm theo giấy tờ tùy thân bản chính của người đi tàu (hoặc người mua vé) cho nhân viên đường sắt. Đồng thời, thông tin trên thẻ đi tàu phải trùng khớp với giấy tờ tùy thân của hành khách.</p>
+                                    <i>Trân trọng cảm ơn!.</i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /main -->
+    </div>
+    <!-- /wrap -->
+</div>
+

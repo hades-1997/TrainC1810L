@@ -1,0 +1,96 @@
+﻿@model IEnumerable<SpoorC1810L.Models.Train>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_SiderBar.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Field)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrainNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrainName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RouteFromTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartureTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Compartment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OneAC)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TwoAC)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ThreeAC)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sleeper)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.General)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Field)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrainNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrainName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RouteFromTo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartureTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Compartment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OneAC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TwoAC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThreeAC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sleeper)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.General)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

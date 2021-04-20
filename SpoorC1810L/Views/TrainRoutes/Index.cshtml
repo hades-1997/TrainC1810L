@@ -1,0 +1,52 @@
+﻿@model IEnumerable<SpoorC1810L.Models.TrainRoute>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_SiderBar";
+}
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.station)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.train)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartureTimeTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Range) 
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.station.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.train.RouteFromTo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartureTimeTo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Range) <span>Km</span>
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
