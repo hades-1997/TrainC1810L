@@ -46,10 +46,12 @@ namespace SpoorC1810L.Controllers
 
         //POST/home/showtrain
 
-        public async Task<IActionResult> ShowTrain(string routefrom, string routeto)
+        public async Task<IActionResult> ShowTrain(string routeto , int routefrom)
         {
               
-            return View("SearchTrain", await _context.TrainRoute.Include(p => p.train).Include(p => p.station).Where(t => t.train.RouteFromTo.Contains(routeto)).Take(6).ToListAsync());
+            return View("SearchTrain", await _context.TrainRoute.Include(p => p.train).Include(p => p.station)
+                .Where(t => t.train.RouteFromTo.Contains(routeto) && t.StationId==(routefrom))
+                .Take(6).ToListAsync());
         }
     }
 }
