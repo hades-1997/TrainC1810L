@@ -49,20 +49,20 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="name">Select Train:</label>
-                        <select class="form-control" id="name" required="required">
+                        <select class="form-control" id="compartment" required="required" onchange="GetCompartment(this);">
                             <option disabled selected value="">Choose any train compartment</option>
-                            <option value="1">1AC</option>
-                            <option value="2">2AC</option>
-                            <option value="3">3AC</option>
-                            <option value="4">Sleeper</option>
-                            <option value="5">General</option>
+                            <option value="@Model.train.OneAC">1AC</option>
+                            <option value="@Model.train.TwoAC)">2AC</option>
+                            <option value="@Model.train.ThreeAC)">3AC</option>
+                            <option value="@Model.train.Sleeper)">Sleeper</option>
+                            <option value="@Model.train.General)">General</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="seats">Total Passenger: </label>
-                        <select class="form-control" id='seats' required="required">
+                        <select class="form-control" id='seats' required="required" onchange="">
                             <option disabled selected value="">Select Seats</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -169,7 +169,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Movies Name</th>
+                        <th>Train </th>
                         <th>Number of Seats</th>
                         <th>Seats</th>
                     </tr>
@@ -196,7 +196,9 @@
     </div>
 
 </div>
+<script>
 
+</script>
 <script type="text/javascript" src="~/admin/js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="~/admin/js/underscore-min.js"></script>
 <script type="text/javascript" src="~/admin/js/backbone.js"></script>
