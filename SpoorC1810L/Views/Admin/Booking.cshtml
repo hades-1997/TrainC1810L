@@ -1,0 +1,204 @@
+﻿@model SpoorC1810L.Models.TrainRoute
+
+@{
+    Layout = "~/Views/Shared/_SiderBar.cshtml";
+}
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <form class='bookingTicket'>
+            <div class="row">
+                <div class="col-md-6">
+                    <fieldset disabled="">
+                        <label class="col-form-label" for="train">Mã Chuyến Tàu: </label>
+                        <input type="text" id="disabledTextInput" name="train" class="form-control" placeholder="@Html.DisplayFor(model => model.train.TrainNo)">
+                    </fieldset>
+                </div>
+                <div class="col-md-6">
+                    <fieldset disabled="">
+                        <label class="col-form-label" for="departuretimeto">Thời Gian Đến: </label>
+                        <input type="text" id="disabledTextInput" name="departuretimeto" class="form-control" placeholder="@Html.DisplayFor(model => model.DepartureTimeTo)">
+                    </fieldset>
+                </div>
+                <div class="col-12" style="padding:10px"></div>
+                <div class="col-6">
+                    <fieldset disabled="">
+                        <label class="col-form-label" for="field">Thông Tin Chuyến: </label>
+                        <input type="text" id="disabledTextInput" name="field" class="form-control" placeholder="@Html.DisplayFor(model => model.train.Field)">
+                    </fieldset>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="pnrno" class="col-form-label">PNR NO :</label>
+                        <input class="form-control" type="text" value="" id="example-text-input" name="pnrno">
+                    </div>
+                </div>
+                <div class="col-12" style="padding:10px"></div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="passengername" class="col-form-label">Name :</label>
+                        <input class="form-control" type="text" value="" id="example-text-input" name="passengername">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="age" class="col-form-label">Age :</label>
+                        <input class="form-control" type="number" value="" id="age" name="age">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name">Select Train:</label>
+                        <select class="form-control" id="name" required="required">
+                            <option disabled selected value="">Choose any train compartment</option>
+                            <option value="1">1AC</option>
+                            <option value="2">2AC</option>
+                            <option value="3">3AC</option>
+                            <option value="4">Sleeper</option>
+                            <option value="5">General</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="seats">Total Passenger: </label>
+                        <select class="form-control" id='seats' required="required">
+                            <option disabled selected value="">Select Seats</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        <span class="message"></span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-sm nextButton" id="continueBooking">Continue</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="row d-flex justify-content-center">
+        <div class="ticketBox">
+
+            <div class="col-md-12">
+                <div class="screen-map">
+                    <label for="availableRoot">Selected Seat</label>
+                    <img src="~/admin/img/selected.png" class="selectedRoot" id="selectedRoot">
+                    <label for="">Booked Seat</label>
+                    <img src="~/admin/img/booked.png" class="bookedRoot" id="bookedRoot">
+                    <label for="">Available Seat</label>
+                    <img src="~/admin/img/available.png" class="availableRoot" id="availableRoot">
+                </div>
+            </div>
+
+
+            <div class="col-md-12">
+                <table class="table table-striped" id="table-screen">
+                    <thead id="screen-head">
+                        <tr>
+                            <script type="text/template" id='displayTickets'>
+                                <% _.each(_.range(0,columns+1),function(item){ %>
+                                <% if(item==0) {%>
+                                <th></th>
+                                <% } else {%>
+                                <th>
+                                    <%= item %>
+                                </th>
+                                <% } %>
+                                <% }) %>
+                            </script>
+                        </tr>
+                    </thead>
+                    <tbody id="screen-body">
+                        <script type="text/template" id='displaybodyTickets'>
+                            <% _.each(rows,function(row){ %>
+                            <tr id='displayscreenTickets'>
+                                <td>
+                                    <%=row%>
+                                </td>
+                                <% _.each(_.range(1,columns+1),function(column){ %>
+                                <% var id=(_.indexOf(rows,row)*columns)+column; var seatsBooked=JSON.parse(localStorage.getItem('seatsBooked'));
+                                if(seatsBooked!=null && _.indexOf(seatsBooked,String(id))!=-1) {%>
+                                <td><img src="/admin/img/booked.png" class="reserved-seat" id="<%=id%>" /></td>
+                                <% }else {%>
+                                <td><img src="/admin/img/available.png" class="empty-seat" id="<%=id%>" /></td>
+                                <% }}) %>
+                            </tr>
+                            <% }) %>
+                        </script>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-md-12">
+                <div id="screen">
+                    <span color="white">Screen This Way</span>
+                </div>
+            </div>
+
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn btn-success btn-sm nextButton" id="confirmSelection">Book Now</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row d-flex justify-content-center">
+
+        <div class="table-responsive booked_list">
+            <h4 align="center">Tickets Booked</h4>
+            <br />
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Movies Name</th>
+                        <th>Number of Seats</th>
+                        <th>Seats</th>
+                    </tr>
+                </thead>
+                <tbody id="soldMessage">
+                    <script type="text/template" id='ticketMessage'>
+                        <% _.each(items,function(item){%>
+                        <tr>
+                            <td>
+                                <%-item.names%>
+                            </td>
+                            <td>
+                                <%-item.numbers %>
+                            </td>
+                            <td>
+                                <%-item.seats%>
+                            </td>
+                        </tr>
+                        <%})%>
+                    </script>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript" src="~/admin/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="~/admin/js/underscore-min.js"></script>
+<script type="text/javascript" src="~/admin/js/backbone.js"></script>
+<script type="text/javascript" src="~/admin/js/core.js"></script>
+
