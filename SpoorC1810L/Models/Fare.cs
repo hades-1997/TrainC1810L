@@ -14,7 +14,6 @@ namespace SpoorC1810L.Models
         public int Distance { get; set; }
         public int TypeOfCompartment { get; set; }
         public int TypeOfTrain { get; set; }
-
     }
 }
 
