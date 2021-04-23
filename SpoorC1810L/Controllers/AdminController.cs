@@ -43,5 +43,16 @@ namespace TrainC1810L.Controllers
 
             return View(booking);
         }
+
+        //[HttpPost]
+        //public JsonResult AjaxMethod(string name)
+        //{
+        //    ApplicationDbContext application = new ApplicationDbContext
+        //    {
+        //        Name = name,
+        //        DateTime = DateTime.Now.ToString()
+        //    };
+        //    return Json(application);
+        //}
     }
 }

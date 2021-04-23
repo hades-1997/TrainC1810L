@@ -1,8 +1,12 @@
-﻿var BookedSeats = [];
-var Rows = ["A", "B", "C", "D","E", "F", "G" , "H", "J", "K"]; //hàng
-var Columns = 6; //cột
+﻿ function GetCompartment(item)
+ {
+     var compart = item.value;
+var BookedSeats = [];
+     var Rows = ["A", "B", "C", "D", "E", "F", "G", "H", "J", "K"]; //hàn
+     var hang = Rows.length;
+     var Columns = compart / hang; //cột columns bằng số total number / 10
 var TotalSeats = Rows.length * Columns;
-//console.log(Rows.length);
+     console.log(Columns);
 function convertIntToSeatNumbers(seats) {
     var bookedSeats = "";
     _.each(seats, function(seat) {
@@ -30,7 +34,7 @@ var InitialView = Backbone.View.extend({
         var selectedNumberOfSeats = $('#seats').val();
         if (seatsBooked != null)
             seatsAvailable = TotalSeats - seatsBooked.length;
-        if (!$('#name').val()) {
+        if (!$('#compartment').val()) {
             $(".message").html("Please select any movie");
         } else if (!selectedNumberOfSeats) {
             $(".message").html("Please select seats");
@@ -41,7 +45,9 @@ var InitialView = Backbone.View.extend({
             screenUI.showView();
         }
     }
+   
 });
+
 var initialView = new InitialView({
     el: $('.bookingTicket')
 });
@@ -83,11 +89,11 @@ var ScreenUI = Backbone.View.extend({
     },
     updateTicketInfo: function() {
         var bookedSeats = convertIntToSeatNumbers(BookedSeats);
-        $("#soldMessage").append("<tr><td>" + $('#name').val() + "</td><td>" + $('#seats').val() + "</td><td>" + bookedSeats + "</td></tr>");
+        $("#soldMessage").append("<tr><td>" + $('#compartment').val() + "</td><td>" + $('#seats').val() + "</td><td>" + bookedSeats + "</td></tr>");
     },
 
-    //book ghế 
 
+    //book ghế 
     bookTickets: function() {
         if (BookedSeats.length == parseInt($('#seats').val())) {
             $(".message").text("");
@@ -100,7 +106,7 @@ var ScreenUI = Backbone.View.extend({
 
 
             var identifySeats = JSON.parse(localStorage.getItem('identifySeats')) || {};
-            identifySeats[$('#name').val()] = BookedSeats;
+            identifySeats[$('#compartment').val()] = BookedSeats;
 
             localStorage.setItem('identifySeats', JSON.stringify(identifySeats));
             localStorage.setItem('seatsBooked', JSON.stringify(seatsBooked));
@@ -148,3 +154,5 @@ var TicketInfo = Backbone.View.extend({
 var ticketInfo = new TicketInfo({
     el: $('.table-responsive')
 });
+
+ }
