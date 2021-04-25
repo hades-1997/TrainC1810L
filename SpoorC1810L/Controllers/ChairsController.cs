@@ -6,26 +6,27 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SpoorC1810L.Data;
-using SpoorC1810L.Models;
+using TrainC1810L.Models;
 
-namespace SpoorC1810L.Controllers
+namespace TrainC1810L.Controllers
 {
-    public class TrainsController : Controller
+    public class ChairsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public TrainsController(ApplicationDbContext context)
+        public ChairsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Trains
+        // GET: Chairs
         public async Task<IActionResult> Index()
         {
-            return View(await _context.trains.ToListAsync());
+            var applicationDbContext = _context.chairs.Include(c => c.compartment);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Trains/Details/5
+        // GET: Chairs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +34,42 @@ namespace SpoorC1810L.Controllers
                 return NotFound();
             }
 
-            var train = await _context.trains
+            var chair = await _context.chairs
+                .Include(c => c.compartment)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (train == null)
+            if (chair == null)
             {
                 return NotFound();
             }
 
-            return View(train);
+            return View(chair);
         }
 
-        // GET: Trains/Create
+        // GET: Chairs/Create
         public IActionResult Create()
         {
+            ViewData["CompartmentId"] = new SelectList(_context.compartments, "Id", "Id");
             return View();
         }
 
-        // POST: Trains/Create
+        // POST: Chairs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Field,TrainNo,TrainName,RouteFromTo,DepartureTime")] Train train)
+        public async Task<IActionResult> Create([Bind("Id,Sign,CompartmentId")] Chair chair)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(train);
+                _context.Add(chair);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(train);
+            ViewData["CompartmentId"] = new SelectList(_context.compartments, "Id", "Id", chair.CompartmentId);
+            return View(chair);
         }
 
-        // GET: Trains/Edit/5
+        // GET: Chairs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +77,23 @@ namespace SpoorC1810L.Controllers
                 return NotFound();
             }
 
-            var train = await _context.trains.FindAsync(id);
-            if (train == null)
+            var chair = await _context.chairs.FindAsync(id);
+            if (chair == null)
             {
                 return NotFound();
             }
-            return View(train);
+            ViewData["CompartmentId"] = new SelectList(_context.compartments, "Id", "Id", chair.CompartmentId);
+            return View(chair);
         }
 
-        // POST: Trains/Edit/5
+        // POST: Chairs/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Field,TrainNo,TrainName,RouteFromTo,DepartureTime")] Train train)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Sign,CompartmentId")] Chair chair)
         {
-            if (id != train.Id)
+            if (id != chair.Id)
             {
                 return NotFound();
             }
@@ -97,12 +102,12 @@ namespace SpoorC1810L.Controllers
             {
                 try
                 {
-                    _context.Update(train);
+                    _context.Update(chair);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TrainExists(train.Id))
+                    if (!ChairExists(chair.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +118,11 @@ namespace SpoorC1810L.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(train);
+            ViewData["CompartmentId"] = new SelectList(_context.compartments, "Id", "Id", chair.CompartmentId);
+            return View(chair);
         }
 
-        // GET: Trains/Delete/5
+        // GET: Chairs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +130,31 @@ namespace SpoorC1810L.Controllers
                 return NotFound();
             }
 
-            var train = await _context.trains
+            var chair = await _context.chairs
+                .Include(c => c.compartment)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (train == null)
+            if (chair == null)
             {
                 return NotFound();
             }
 
-            return View(train);
+            return View(chair);
         }
 
-        // POST: Trains/Delete/5
+        // POST: Chairs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var train = await _context.trains.FindAsync(id);
-            _context.trains.Remove(train);
+            var chair = await _context.chairs.FindAsync(id);
+            _context.chairs.Remove(chair);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TrainExists(int id)
+        private bool ChairExists(int id)
         {
-            return _context.trains.Any(e => e.Id == id);
+            return _context.chairs.Any(e => e.Id == id);
         }
     }
 }

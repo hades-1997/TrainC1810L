@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SpoorC1810L.Models.Train>
+﻿@model IEnumerable<TrainC1810L.Models.Compartment>
 
 @{
     ViewData["Title"] = "Index";
@@ -14,19 +14,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Field)
+                @Html.DisplayNameFor(model => model.Toa)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TrainNo)
+                @Html.DisplayNameFor(model => model.Numrows)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TrainName)
+                @Html.DisplayNameFor(model => model.Numcloums)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RouteFromTo)
+                @Html.DisplayNameFor(model => model.Total)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DepartureTime)
+                @Html.DisplayNameFor(model => model.trains)
             </th>
             <th></th>
         </tr>
@@ -35,19 +35,19 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Field)
+                @Html.DisplayFor(modelItem => item.Toa)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TrainNo)
+                @Html.DisplayFor(modelItem => item.Numrows)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TrainName)
+                @Html.DisplayFor(modelItem => item.Numcloums)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RouteFromTo)
+                @Html.DisplayFor(modelItem => item.Total)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DepartureTime)
+                @Html.DisplayFor(modelItem => item.trains.Field)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

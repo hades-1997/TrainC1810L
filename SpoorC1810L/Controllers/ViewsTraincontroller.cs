@@ -12,9 +12,6 @@ namespace SpoorC1810L.Controllers
     {
         public IActionResult Index()
         {
-           
-
-            
             return View();
         }
     }

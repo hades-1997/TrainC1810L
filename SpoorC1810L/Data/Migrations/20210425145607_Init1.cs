@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace SpoorC1810L.Migrations
+namespace TrainC1810L.Migrations
 {
-    public partial class Init : Migration
+    public partial class Init1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -92,6 +92,23 @@ namespace SpoorC1810L.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Railway", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "trains",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Field = table.Column<string>(nullable: true),
+                    TrainNo = table.Column<int>(nullable: false),
+                    TrainName = table.Column<string>(nullable: true),
+                    RouteFromTo = table.Column<string>(nullable: true),
+                    DepartureTime = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_trains", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -221,36 +238,6 @@ namespace SpoorC1810L.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "trains",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Field = table.Column<string>(nullable: true),
-                    TrainNo = table.Column<int>(nullable: false),
-                    TrainName = table.Column<string>(nullable: true),
-                    RouteFromTo = table.Column<string>(nullable: true),
-                    DepartureTime = table.Column<DateTime>(nullable: false),
-                    Compartment = table.Column<int>(nullable: false),
-                    OneAC = table.Column<int>(nullable: false),
-                    TwoAC = table.Column<int>(nullable: false),
-                    ThreeAC = table.Column<int>(nullable: false),
-                    Sleeper = table.Column<int>(nullable: false),
-                    General = table.Column<int>(nullable: false),
-                    StationId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_trains", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_trains_stations_StationId",
-                        column: x => x.StationId,
-                        principalTable: "stations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "TrainRoute",
                 columns: table => new
                 {
@@ -331,11 +318,6 @@ namespace SpoorC1810L.Migrations
                 name: "IX_TrainRoute_TrainId",
                 table: "TrainRoute",
                 column: "TrainId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_trains_StationId",
-                table: "trains",
-                column: "StationId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -371,10 +353,10 @@ namespace SpoorC1810L.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "trains");
+                name: "stations");
 
             migrationBuilder.DropTable(
-                name: "stations");
+                name: "trains");
 
             migrationBuilder.DropTable(
                 name: "Railway");

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SpoorC1810L.Controllers;
 using SpoorC1810L.Data;
+using SpoorC1810L.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,15 +45,15 @@ namespace TrainC1810L.Controllers
             return View(booking);
         }
 
-        //[HttpPost]
-        //public JsonResult AjaxMethod(string name)
-        //{
-        //    ApplicationDbContext application = new ApplicationDbContext
-        //    {
-        //        Name = name,
-        //        DateTime = DateTime.Now.ToString()
-        //    };
-        //    return Json(application);
-        //}
+        [HttpPost]
+        public JsonResult GetCompart(string compartment)
+        {
+            TrainRoute trains = new TrainRoute
+            {
+                //Compartment = compartment
+            };
+
+            return Json(trains);
+        }
     }
 }

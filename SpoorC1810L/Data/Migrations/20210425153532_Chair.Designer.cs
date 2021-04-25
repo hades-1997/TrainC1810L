@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SpoorC1810L.Data;
 
-namespace SpoorC1810L.Migrations
+namespace TrainC1810L.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210420010634_Init")]
-    partial class Init
+    [Migration("20210425153532_Chair")]
+    partial class Chair
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -321,32 +321,14 @@ namespace SpoorC1810L.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Compartment")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("DepartureTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Field")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("General")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OneAC")
-                        .HasColumnType("int");
-
                     b.Property<string>("RouteFromTo")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Sleeper")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("StationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ThreeAC")
-                        .HasColumnType("int");
 
                     b.Property<string>("TrainName")
                         .HasColumnType("nvarchar(max)");
@@ -354,12 +336,7 @@ namespace SpoorC1810L.Migrations
                     b.Property<int>("TrainNo")
                         .HasColumnType("int");
 
-                    b.Property<int>("TwoAC")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("StationId");
 
                     b.ToTable("trains");
                 });
@@ -390,6 +367,55 @@ namespace SpoorC1810L.Migrations
                     b.HasIndex("TrainId");
 
                     b.ToTable("TrainRoute");
+                });
+
+            modelBuilder.Entity("TrainC1810L.Models.Chair", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CompartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Sign")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompartmentId");
+
+                    b.ToTable("chairs");
+                });
+
+            modelBuilder.Entity("TrainC1810L.Models.Compartment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Numcloums")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Numrows")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Toa")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Total")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TrainId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TrainId");
+
+                    b.ToTable("compartments");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -452,13 +478,6 @@ namespace SpoorC1810L.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SpoorC1810L.Models.Train", b =>
-                {
-                    b.HasOne("SpoorC1810L.Models.Station", null)
-                        .WithMany("trains")
-                        .HasForeignKey("StationId");
-                });
-
             modelBuilder.Entity("SpoorC1810L.Models.TrainRoute", b =>
                 {
                     b.HasOne("SpoorC1810L.Models.Station", "station")
@@ -469,6 +488,24 @@ namespace SpoorC1810L.Migrations
 
                     b.HasOne("SpoorC1810L.Models.Train", "train")
                         .WithMany("trainRoutes")
+                        .HasForeignKey("TrainId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TrainC1810L.Models.Chair", b =>
+                {
+                    b.HasOne("TrainC1810L.Models.Compartment", "compartment")
+                        .WithMany("chairs")
+                        .HasForeignKey("CompartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TrainC1810L.Models.Compartment", b =>
+                {
+                    b.HasOne("SpoorC1810L.Models.Train", "trains")
+                        .WithMany()
                         .HasForeignKey("TrainId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

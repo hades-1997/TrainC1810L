@@ -1,4 +1,4 @@
-﻿@model SpoorC1810L.Models.Train
+﻿@model TrainC1810L.Models.Compartment
 
 @{
     ViewData["Title"] = "Details";
@@ -8,38 +8,38 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Train</h4>
+    <h4>Compartment</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Field)
+            @Html.DisplayNameFor(model => model.Toa)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Field)
+            @Html.DisplayFor(model => model.Toa)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TrainNo)
+            @Html.DisplayNameFor(model => model.Numrows)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TrainNo)
+            @Html.DisplayFor(model => model.Numrows)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TrainName)
+            @Html.DisplayNameFor(model => model.Numcloums)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TrainName)
+            @Html.DisplayFor(model => model.Numcloums)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RouteFromTo)
+            @Html.DisplayNameFor(model => model.Total)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RouteFromTo)
+            @Html.DisplayFor(model => model.Total)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DepartureTime)
+            @Html.DisplayNameFor(model => model.trains)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DepartureTime)
+            @Html.DisplayFor(model => model.trains.Id)
         </dd>
     </dl>
 </div>
