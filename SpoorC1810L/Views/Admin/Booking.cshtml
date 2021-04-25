@@ -3,77 +3,19 @@
 @{
     Layout = "~/Views/Shared/_SiderBar.cshtml";
 }
-<div class="container">
+<link href="~/admin/css/BookingVersion1.css" rel="stylesheet" />
+<div class="container" onload="onLoaderFunc()">
     <div class="row d-flex justify-content-center">
         <form class='bookingTicket'>
             <div class="row">
-                <div class="col-md-6">
-                    <fieldset disabled="">
-                        <label class="col-form-label" for="train">Mã Chuyến Tàu: </label>
-                        <input type="text" id="disabledTextInput" name="train" class="form-control" placeholder="@Html.DisplayFor(model => model.train.TrainNo)">
-                    </fieldset>
-                </div>
-                <div class="col-md-6">
-                    <fieldset disabled="">
-                        <label class="col-form-label" for="departuretimeto">Thời Gian Đến: </label>
-                        <input type="text" id="disabledTextInput" name="departuretimeto" class="form-control" placeholder="@Html.DisplayFor(model => model.DepartureTimeTo)">
-                    </fieldset>
-                </div>
-                <div class="col-12" style="padding:10px"></div>
-                <div class="col-6">
-                    <fieldset disabled="">
-                        <label class="col-form-label" for="field">Thông Tin Chuyến: </label>
-                        <input type="text" id="disabledTextInput" name="field" class="form-control" placeholder="@Html.DisplayFor(model => model.train.Field)">
-                    </fieldset>
-                </div>
-                <div class="col-6">
+                <div class="col-md-12">
                     <div class="form-group">
-                        <label for="pnrno" class="col-form-label">PNR NO :</label>
-                        <input class="form-control" type="text" value="" id="example-text-input" name="pnrno">
-                    </div>
-                </div>
-                <div class="col-12" style="padding:10px"></div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <label for="passengername" class="col-form-label">Name :</label>
-                        <input class="form-control" type="text" value="" id="example-text-input" name="passengername">
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <label for="age" class="col-form-label">Age :</label>
-                        <input class="form-control" type="number" value="" id="age" name="age">
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="name">Select Train:</label>
-                        <select class="form-control" id="compartment" required="required" onchange="GetCompartment(this);">
+                        <label for="compartment">Select Train:</label>
+                        <select class="form-control" id="compartment" required="required">
                             <option disabled selected value="">Choose any train compartment</option>
-                            <option value="@Model.train.OneAC">1AC</option>
-                            <option value="@Model.train.TwoAC)">2AC</option>
-                            <option value="@Model.train.ThreeAC)">3AC</option>
-                            <option value="@Model.train.Sleeper)">Sleeper</option>
-                            <option value="@Model.train.General)">General</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="seats">Total Passenger: </label>
-                        <select class="form-control" id='seats' required="required" onchange="">
-                            <option disabled selected value="">Select Seats</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
+
+                            <option value="OneAC">OneAC</option>
+                           
                         </select>
                     </div>
                 </div>
@@ -86,17 +28,16 @@
                 </div>
                 <div class="col-md-12">
                     <div class="text-center">
-                        <button type="button" class="btn btn-success btn-sm nextButton" id="continueBooking">Continue</button>
+                        <button type="button" class="btn btn-success btn-sm nextButton" id="continueBooking" onclick="takeData()">
+                            Continue
+                        </button>
                     </div>
                 </div>
             </div>
-
         </form>
     </div>
-
     <div class="row d-flex justify-content-center">
         <div class="ticketBox">
-
             <div class="col-md-12">
                 <div class="screen-map">
                     <label for="availableRoot">Selected Seat</label>
@@ -107,100 +48,177 @@
                     <img src="~/admin/img/available.png" class="availableRoot" id="availableRoot">
                 </div>
             </div>
-
-
-            <div class="col-md-12">
-                <table class="table table-striped" id="table-screen">
-                    <thead id="screen-head">
-                        <tr>
-                            <script type="text/template" id='displayTickets'>
-                                <% _.each(_.range(0,columns+1),function(item){ %>
-                                <% if(item==0) {%>
-                                <th></th>
-                                <% } else {%>
-                                <th>
-                                    <%= item %>
-                                </th>
-                                <% } %>
-                                <% }) %>
-                            </script>
-                        </tr>
-                    </thead>
-                    <tbody id="screen-body">
-                        <script type="text/template" id='displaybodyTickets'>
-                            <% _.each(rows,function(row){ %>
-                            <tr id='displayscreenTickets'>
-                                <td>
-                                    <%=row%>
-                                </td>
-                                <% _.each(_.range(1,columns+1),function(column){ %>
-                                <% var id=(_.indexOf(rows,row)*columns)+column; var seatsBooked=JSON.parse(localStorage.getItem('seatsBooked'));
-                                if(seatsBooked!=null && _.indexOf(seatsBooked,String(id))!=-1) {%>
-                                <td><img src="/admin/img/booked.png" class="reserved-seat" id="<%=id%>" /></td>
-                                <% }else {%>
-                                <td><img src="/admin/img/available.png" class="empty-seat" id="<%=id%>" /></td>
-                                <% }}) %>
-                            </tr>
-                            <% }) %>
-                        </script>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="col-md-12">
-                <div id="screen">
-                    <span color="white">Screen This Way</span>
+            <div class="seatSelection col-lg-12">
+                <div class="seatsChart col-lg-12">
+                    <p id="notification"></p>
+                    <div class="seatRow row" id="seatRow">
+                        <div class=" col-md-2" id="book">
+                            @*<span class="seatNumber seatUnavailable" id="1_1" role="checkbox" value="45" aria-checked="false" focusable="true" tabindex="-1">1</span>*@
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
-
-            <div class="col-md-12 text-center">
-                <button type="button" class="btn btn-success btn-sm nextButton" id="confirmSelection">Book Now</button>
-            </div>
-
         </div>
-
     </div>
-
     <div class="row d-flex justify-content-center">
-
         <div class="table-responsive booked_list">
             <h4 align="center">Tickets Booked</h4>
             <br />
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Train </th>
-                        <th>Number of Seats</th>
-                        <th>Seats</th>
-                    </tr>
-                </thead>
-                <tbody id="soldMessage">
-                    <script type="text/template" id='ticketMessage'>
-                        <% _.each(items,function(item){%>
+            <div class="seatsReceipt col-lg-12">
+                <p>
+                    <strong>Selected Seats: <span class="seatsAmount" style="color:red;padding:0 20px;"> 0 </span></strong>
+                    <button id="btnClear" class="btn" style="margin-left: 40px; margin-bottom: 11px;"> Clear </button>
+                </p>
+                <br />
+                <table class="table table-bordered">
+                    <thead>
                         <tr>
-                            <td>
-                                <%-item.names%>
-                            </td>
-                            <td>
-                                <%-item.numbers %>
-                            </td>
-                            <td>
-                                <%-item.seats%>
-                            </td>
+                            <th>Row</th>
+                            <th>Number of Seats</th>
+                            <th>Price</th>
+                            <th>Delete</th>
                         </tr>
-                        <%})%>
-                    </script>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody id="seatsList">
+                    </tbody>
+                </table>
+            </div>
+            <br />
+            <div class="checkout col-lg-offset-6">
+                <span>Subtotal: </span> <span class="txtSubTotal" style="color:red;padding:0 20px;"> 0.00</span>VND
+                <button id="btnCheckout" name="btnCheckout" class="btn btn-primary" style="margin-left: 40px;margin-bottom: 11px;">Check out</button>
+            </div>
         </div>
     </div>
-
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script>
+    function takeData() {
+        var compart = $("#compartment").val();
+        alert(compart);
+            $("#seatRow #book span").remove();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Compart")',
+            dataType: 'json',
+            data: { compartment: compart },
+            success: function (data) {
+                var items = '';
+                $.each(data, function (i, item) {
+                    var rows = "<span class='seatNumber seatUnavailable' id='1_1' role='checkbox' value='45' aria-checked='false' focusable='true' tabindex=' - 1'>1</span>"; /*" + item.compartment +"*/
+                    $('#seatRow #book').append(rows);
+                });
+            },
+            //data: { compartment: compart},
+            //dataType: "text",
+            //success: function (msg) {
+            //    console.log(msg);
+            //},
+            error: function (ex) {
+                var r = jQuery.parseJSON(response.responseText);
+                alert("Message: " + r.Message);
+                alert("StackTrace: " + r.StackTrace);
+                alert("ExceptionType: " + r.ExceptionType);
+            }
+        });
+        return false;
+        $(".seatNumber").click(
+            function () {
+                if (!$(this).hasClass("seatUnavailable")) {
+                    // If selected, unselect it
+                    if ($(this).hasClass("seatSelected")) {
+                        var thisId = $(this).attr('id');
+                        var price = $('#seatsList .' + thisId).val();
+                        $(this).removeClass("seatSelected");
+                        $('#seatsList .' + thisId).remove();
+                        // Calling functions to update checkout total and seat counter.
+                        removeFromCheckout(price);
+                        refreshCounter();
+                    }
+                    else {
+                        // else, select it
+                        // getting values from Seat
+                        var thisId = $(this).attr('id');
+                        var id = thisId.split("_");
+                        var price = $(this).attr('value');
+                        var seatDetails = "<td>" + id[0] + "</td> <td>" + id[1] + "<td>" + price + "VND</td>";
+
+
+                        var freeSeats = parseInt($('.freeSeats').first().text());
+                        var selectedSeats = parseInt($(".seatSelected").length);
+
+                        // If you have free seats available the price of this one will be 0.
+                        if (selectedSeats < freeSeats) {
+                            price = 0;
+                        }
+
+                        // Adding this seat to the list
+                        var seatDetails = "<td>" + id[0] + "</td> <td>" + id[1] + "<td>" + price + "<strong style='padding: 0 20px;'>VND</strong></td>";
+                        $("#seatsList").append('<tr class=' + thisId + '>' + seatDetails + "  " + "<td><button style='margin-left:20px;' id='remove:" + thisId + "' class='btn btn-default btn-sm removeSeat' value='" + price + "'><strong>X</strong></button></td></tr>");
+                        $(this).addClass("seatSelected");
+
+                        addToCheckout(price);
+                        refreshCounter();
+                    }
+                }
+            }
+        );
+        // Clicking any of the dynamically-generated X buttons on the list
+        $(document).on('click', ".removeSeat", function () {
+            // Getting the Id of the Seat
+            var id = $(this).attr('id').split(":");
+            var price = $(this).attr('value')
+            $('#seatsList .' + id[1]).remove();
+            $("#" + id[1] + ".seatNumber").removeClass("seatSelected");
+            removeFromCheckout(price);
+            refreshCounter();
+        }
+        );
+        // Show tooltip on hover.
+        $(".seatNumber").hover(
+            function () {
+                if (!$(this).hasClass("seatUnavailable")) {
+                    var id = $(this).attr('id');
+                    var id = id.split("_");
+                    var price = $(this).attr('value');
+                    var tooltip = "Row: " + id[0] + " Seat:" + id[1] + " Price:CA$:" + price;
+
+                    $(this).prop('title', tooltip);
+                } else {
+                    $(this).prop('title', "Seat unavailable");
+                }
+            }
+        );
+        // Function to refresh seats counter
+        function refreshCounter() {
+            $(".seatsAmount").text($(".seatSelected").length);
+        }
+        // Add seat to checkout
+        function addToCheckout(thisSeat) {
+            var seatPrice = parseInt(thisSeat);
+            var num = parseInt($('.txtSubTotal').text());
+            num += seatPrice;
+            num = num.toString();
+            $('.txtSubTotal').text(num);
+        }
+        // Remove seat from checkout
+        function removeFromCheckout(thisSeat) {
+            var seatPrice = parseInt(thisSeat);
+            var num = parseInt($('.txtSubTotal').text());
+            num -= seatPrice;
+            num = num.toString();
+            $('.txtSubTotal').text(num);
+        }
+        // Clear seats.
+        $("#btnClear").click(
+            function () {
+                $('.txtSubTotal').text(0);
+                $(".seatsAmount").text(0);
+                $('.seatSelected').removeClass('seatSelected');
+                $('#seatsList td').remove();
+            }
+        );
+    }
 
 </script>
-<script type="text/javascript" src="~/admin/js/jquery-2.1.4.min.js"></script>
-<script type="text/javascript" src="~/admin/js/underscore-min.js"></script>
-<script type="text/javascript" src="~/admin/js/backbone.js"></script>
-<script type="text/javascript" src="~/admin/js/core.js"></script>
-

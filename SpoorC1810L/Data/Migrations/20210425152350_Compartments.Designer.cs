@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SpoorC1810L.Data;
 
 namespace TrainC1810L.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210425152350_Compartments")]
+    partial class Compartments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -377,14 +379,11 @@ namespace TrainC1810L.Migrations
                     b.Property<int>("CompartmentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Sign")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CompartmentId");
 
-                    b.ToTable("chairs");
+                    b.ToTable("Chair");
                 });
 
             modelBuilder.Entity("TrainC1810L.Models.Compartment", b =>

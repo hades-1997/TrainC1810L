@@ -6,26 +6,27 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SpoorC1810L.Data;
-using SpoorC1810L.Models;
+using TrainC1810L.Models;
 
-namespace SpoorC1810L.Controllers
+namespace TrainC1810L.Controllers
 {
-    public class TrainsController : Controller
+    public class CompartmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public TrainsController(ApplicationDbContext context)
+        public CompartmentsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Trains
+        // GET: Compartments
         public async Task<IActionResult> Index()
         {
-            return View(await _context.trains.ToListAsync());
+            var applicationDbContext = _context.compartments.Include(c => c.trains);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Trains/Details/5
+        // GET: Compartments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +34,42 @@ namespace SpoorC1810L.Controllers
                 return NotFound();
             }
 
-            var train = await _context.trains
+            var compartment = await _context.compartments
+                .Include(c => c.trains)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (train == null)
+            if (compartment == null)
             {
                 return NotFound();
             }
 
-            return View(train);
+            return View(compartment);
         }
 
-        // GET: Trains/Create
+        // GET: Compartments/Create
         public IActionResult Create()
         {
+            ViewData["TrainId"] = new SelectList(_context.trains, "Id", "Id");
             return View();
         }
 
-        // POST: Trains/Create
+        // POST: Compartments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Field,TrainNo,TrainName,RouteFromTo,DepartureTime")] Train train)
+        public async Task<IActionResult> Create([Bind("Id,Toa,Numrows,Numcloums,Total,TrainId")] Compartment compartment)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(train);
+                _context.Add(compartment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(train);
+            ViewData["TrainId"] = new SelectList(_context.trains, "Id", "Id", compartment.TrainId);
+            return View(compartment);
         }
 
-        // GET: Trains/Edit/5
+        // GET: Compartments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +77,23 @@ namespace SpoorC1810L.Controllers
                 return NotFound();
             }
 
-            var train = await _context.trains.FindAsync(id);
-            if (train == null)
+            var compartment = await _context.compartments.FindAsync(id);
+            if (compartment == null)
             {
                 return NotFound();
             }
-            return View(train);
+            ViewData["TrainId"] = new SelectList(_context.trains, "Id", "Id", compartment.TrainId);
+            return View(compartment);
         }
 
-        // POST: Trains/Edit/5
+        // POST: Compartments/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Field,TrainNo,TrainName,RouteFromTo,DepartureTime")] Train train)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Toa,Numrows,Numcloums,Total,TrainId")] Compartment compartment)
         {
-            if (id != train.Id)
+            if (id != compartment.Id)
             {
                 return NotFound();
             }
@@ -97,12 +102,12 @@ namespace SpoorC1810L.Controllers
             {
                 try
                 {
-                    _context.Update(train);
+                    _context.Update(compartment);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TrainExists(train.Id))
+                    if (!CompartmentExists(compartment.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +118,11 @@ namespace SpoorC1810L.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(train);
+            ViewData["TrainId"] = new SelectList(_context.trains, "Id", "Id", compartment.TrainId);
+            return View(compartment);
         }
 
-        // GET: Trains/Delete/5
+        // GET: Compartments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +130,31 @@ namespace SpoorC1810L.Controllers
                 return NotFound();
             }
 
-            var train = await _context.trains
+            var compartment = await _context.compartments
+                .Include(c => c.trains)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (train == null)
+            if (compartment == null)
             {
                 return NotFound();
             }
 
-            return View(train);
+            return View(compartment);
         }
 
-        // POST: Trains/Delete/5
+        // POST: Compartments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var train = await _context.trains.FindAsync(id);
-            _context.trains.Remove(train);
+            var compartment = await _context.compartments.FindAsync(id);
+            _context.compartments.Remove(compartment);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TrainExists(int id)
+        private bool CompartmentExists(int id)
         {
-            return _context.trains.Any(e => e.Id == id);
+            return _context.compartments.Any(e => e.Id == id);
         }
     }
 }

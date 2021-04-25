@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SpoorC1810L.Data;
 
-namespace SpoorC1810L.Migrations
+namespace TrainC1810L.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210423015123_Init1")]
+    [Migration("20210425145607_Init1")]
     partial class Init1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -321,37 +321,19 @@ namespace SpoorC1810L.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Compartment")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("DepartureTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Field")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("General")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OneAC")
-                        .HasColumnType("int");
-
                     b.Property<string>("RouteFromTo")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Sleeper")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ThreeAC")
-                        .HasColumnType("int");
 
                     b.Property<string>("TrainName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TrainNo")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TwoAC")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
