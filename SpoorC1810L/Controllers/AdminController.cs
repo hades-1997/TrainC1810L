@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TrainC1810L.Data;
 using TrainC1810L.Models;
+using TrainC1810L.Models.ModelView;
 
 namespace TrainC1810L.Controllers
 {
@@ -39,10 +40,10 @@ namespace TrainC1810L.Controllers
                            join c in _context.compartments on t.Id equals c.TrainId
                            join cr in _context.chairs on c.Id equals cr.CompartmentId
                            where (t.Id == id)
-                           select new
+                           select new Books
                            {
-                               id = c.TrainId,
-                               idtrain = t.Id,
+                               Id = c.Id,
+                               TrainId = c.TrainId,
                                Field = t.Field,
                                TrainNo = t.TrainNo,
                                TrainName = t.TrainName,
@@ -51,7 +52,7 @@ namespace TrainC1810L.Controllers
                                Toa = c.Toa,
                                Numcloums = c.Numcloums,
                                Numrows = c.Numrows,
-                               Total = c.Total,
+                               Total = c.Total
                            }).ToListAsync();
             //foreach(var item in booking)
             //{
@@ -66,14 +67,15 @@ namespace TrainC1810L.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetCompart(string compartment)
+        public JsonResult GetCompart(int id)
         {
-            TrainRoute trains = new TrainRoute
-            {
-                //Compartment = compartment
-            };
 
-            return Json(trains);
+            Compartment comparts = new Compartment
+            {       
+                Id = id
+            };
+            
+            return Json(comparts);
         }
     }
 }
