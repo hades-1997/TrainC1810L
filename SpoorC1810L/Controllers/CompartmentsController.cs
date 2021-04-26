@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SpoorC1810L.Data;
+using TrainC1810L.Data;
 using TrainC1810L.Models;
 
 namespace TrainC1810L.Controllers

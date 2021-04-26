@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SpoorC1810L.Models
+namespace TrainC1810L.Models
 {
     [Table("stations")]
     public class Station
@@ -14,7 +14,6 @@ namespace SpoorC1810L.Models
         public Railway railway { get; set; }
         public int RailwayId { get; set; }
         public ICollection<TrainRoute> trainRoutes { get; set; }
-        //public ICollection<Train> trains { get; set; }
         public  Station() {}
     }
 }

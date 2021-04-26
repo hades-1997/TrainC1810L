@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SpoorC1810L.Data;
+using TrainC1810L.Data;
 
 namespace TrainC1810L.Migrations
 {
@@ -219,7 +219,7 @@ namespace TrainC1810L.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("SpoorC1810L.Models.Fare", b =>
+            modelBuilder.Entity("TrainC1810L.Models.Fare", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -240,7 +240,7 @@ namespace TrainC1810L.Migrations
                     b.ToTable("fares");
                 });
 
-            modelBuilder.Entity("SpoorC1810L.Models.Passenger", b =>
+            modelBuilder.Entity("TrainC1810L.Models.Passenger", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -277,7 +277,7 @@ namespace TrainC1810L.Migrations
                     b.ToTable("passengers");
                 });
 
-            modelBuilder.Entity("SpoorC1810L.Models.Railway", b =>
+            modelBuilder.Entity("TrainC1810L.Models.Railway", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -292,7 +292,7 @@ namespace TrainC1810L.Migrations
                     b.ToTable("Railway");
                 });
 
-            modelBuilder.Entity("SpoorC1810L.Models.Station", b =>
+            modelBuilder.Entity("TrainC1810L.Models.Station", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -312,7 +312,7 @@ namespace TrainC1810L.Migrations
                     b.ToTable("stations");
                 });
 
-            modelBuilder.Entity("SpoorC1810L.Models.Train", b =>
+            modelBuilder.Entity("TrainC1810L.Models.Train", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -339,7 +339,7 @@ namespace TrainC1810L.Migrations
                     b.ToTable("trains");
                 });
 
-            modelBuilder.Entity("SpoorC1810L.Models.TrainRoute", b =>
+            modelBuilder.Entity("TrainC1810L.Models.TrainRoute", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -467,24 +467,24 @@ namespace TrainC1810L.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SpoorC1810L.Models.Station", b =>
+            modelBuilder.Entity("TrainC1810L.Models.Station", b =>
                 {
-                    b.HasOne("SpoorC1810L.Models.Railway", "railway")
+                    b.HasOne("TrainC1810L.Models.Railway", "railway")
                         .WithMany("stations")
                         .HasForeignKey("RailwayId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SpoorC1810L.Models.TrainRoute", b =>
+            modelBuilder.Entity("TrainC1810L.Models.TrainRoute", b =>
                 {
-                    b.HasOne("SpoorC1810L.Models.Station", "station")
+                    b.HasOne("TrainC1810L.Models.Station", "station")
                         .WithMany("trainRoutes")
                         .HasForeignKey("StationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SpoorC1810L.Models.Train", "train")
+                    b.HasOne("TrainC1810L.Models.Train", "train")
                         .WithMany("trainRoutes")
                         .HasForeignKey("TrainId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -502,7 +502,7 @@ namespace TrainC1810L.Migrations
 
             modelBuilder.Entity("TrainC1810L.Models.Compartment", b =>
                 {
-                    b.HasOne("SpoorC1810L.Models.Train", "trains")
+                    b.HasOne("TrainC1810L.Models.Train", "trains")
                         .WithMany()
                         .HasForeignKey("TrainId")
                         .OnDelete(DeleteBehavior.Cascade)

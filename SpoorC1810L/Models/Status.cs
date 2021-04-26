@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SpoorC1810L.DTO
+namespace TrainC1810L.DTO
 {
     public class Status
     {

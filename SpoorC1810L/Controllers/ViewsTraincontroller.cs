@@ -1,6 +1,5 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
-using SpoorC1810L.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
