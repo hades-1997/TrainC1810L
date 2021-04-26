@@ -1,10 +1,13 @@
-﻿@model SpoorC1810L.Models.TrainRoute
+﻿@model ICollection<TrainC1810L.Models.TrainRoute>
 
 @{
     Layout = "~/Views/Shared/_SiderBar.cshtml";
 }
 <link href="~/admin/css/BookingVersion1.css" rel="stylesheet" />
-<div class="container" onload="onLoaderFunc()">
+<p>
+
+</p>
+<div class="container">
     <div class="row d-flex justify-content-center">
         <form class='bookingTicket'>
             <div class="row">
@@ -13,9 +16,7 @@
                         <label for="compartment">Select Train:</label>
                         <select class="form-control" id="compartment" required="required">
                             <option disabled selected value="">Choose any train compartment</option>
-
-                            <option value="OneAC">OneAC</option>
-                           
+                                <option value="OneAC">1</option>
                         </select>
                     </div>
                 </div>
@@ -55,7 +56,7 @@
                         <div class=" col-md-2" id="book">
                             @*<span class="seatNumber seatUnavailable" id="1_1" role="checkbox" value="45" aria-checked="false" focusable="true" tabindex="-1">1</span>*@
                         </div>
-                        
+
                     </div>
                 </div>
             </div>

@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SpoorC1810L.Data;
-using SpoorC1810L.Models;
+using TrainC1810L.Models;
+using TrainC1810L.Data;
 
 namespace SpoorC1810L.Controllers
 {

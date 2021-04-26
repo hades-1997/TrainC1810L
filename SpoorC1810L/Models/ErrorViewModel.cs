@@ -1,6 +1,6 @@
 using System;
 
-namespace SpoorC1810L.Models
+namespace TrainC1810L.Models
 {
     public class ErrorViewModel
     {
