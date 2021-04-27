@@ -100,18 +100,28 @@ namespace TrainC1810L.Controllers
             //});
         }
 
-
-      
         public IActionResult CreateBookChair()
         {
-
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateBookChair(Chair chair)
+        public async  Task<IActionResult> CreateBookChair(Chair chair, Passenger passenger, BookingTicket bookingTicket)
         {
+
+            _context.Add(chair);
+            await _context.SaveChangesAsync();
+            ViewData["CompartmentId"] = (_context.compartments, "Id", "Id", chair.CompartmentId);
+
+            _context.Add(passenger);
+            await _context.SaveChangesAsync();
+
+
+            _context.Add(bookingTicket);
+            await _context.SaveChangesAsync();
+            ViewData["ChairId"] = (_context.chairs, "Id", "Id", bookingTicket.ChairId);
+            ViewData["PassengerId"] = (_context.passengers, "Id", "Id", bookingTicket.PassengerId);
 
             return View();
         }
