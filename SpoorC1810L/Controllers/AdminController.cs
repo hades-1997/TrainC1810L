@@ -42,7 +42,7 @@ namespace TrainC1810L.Controllers
                                  join t in _context.trains on tr.TrainId equals t.Id
                                  join s in _context.stations on tr.StationId equals s.Id
                                  join c in _context.compartments on t.Id equals c.TrainId
-                                 join cr in _context.chairs on c.Id equals cr.CompartmentId
+                                 //join cr in _context.chairs on c.Id equals cr.CompartmentId
                                  where (t.Id == id)
                                  select new Books
                                  {
@@ -58,10 +58,6 @@ namespace TrainC1810L.Controllers
                                      Numrows = c.Numrows,
                                      Total = c.Total
                                  }).ToListAsync();
-            //foreach(var item in booking)
-            //{
-            //    Console.WriteLine("test " + item.Toa);
-            //}
             if (booking == null)
             {
                 return NotFound();
@@ -83,10 +79,11 @@ namespace TrainC1810L.Controllers
                                 select new Books
                                 {
                                     Id = c.Id,
+                                    Toa = c.Toa,
                                     Numcloums = c.Numcloums,
                                     Numrows = c.Numrows,
                                     Total = c.Total,
-                                    NameCr = cr.Sign
+                                    //NameCr = cr.Sign
                                 }).ToList();
             if (Compart == null)
             {
@@ -101,6 +98,22 @@ namespace TrainC1810L.Controllers
             //{ 
             //    Id = Compart
             //});
+        }
+
+
+      
+        public IActionResult CreateBookChair()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateBookChair(Chair chair)
+        {
+
+            return View();
         }
     }
 }

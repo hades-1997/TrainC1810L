@@ -8,14 +8,14 @@ namespace TrainC1810L.Models
     public class Passenger
     {
         public int Id { get; set; }
-        public string Field { get; set; }
         public string Name { get; set; }
         public int Age { get; set; }
-        public char Gender { get; set; }
+        public bool Gender { get; set; }
         public int Total { get; set; }
         public DateTime DateOfTravel { get; set; }
         public string Class { get; set; }
-        public string TrainNo { get; set; }
+        public TrainRoute trainRoute { get; set; }
+        public int TRId { get; set; }
 
     }
 }

@@ -8,7 +8,7 @@ namespace TrainC1810L.Models
     public class Chair
     {
         public int Id { get; set; }
-        public string Sign { get; set; }
+        public int Seats { get; set; }
         public Compartment compartment { get; set; }
         public int CompartmentId { get; set; }
     }

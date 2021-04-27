@@ -14,5 +14,6 @@ namespace TrainC1810L.Models
         public string RouteFromTo { get; set; }
         public DateTime DepartureTime { get; set; }
         public ICollection<TrainRoute> trainRoutes { get; set; }
+        
     }
 }

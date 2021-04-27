@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TrainC1810L.Models.Chair>
+﻿@model IEnumerable<TrainC1810L.Models.BookingTicket>
 
 @{
     ViewData["Title"] = "Index";
@@ -14,10 +14,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Seats)
+                @Html.DisplayNameFor(model => model.Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.compartment)
+                @Html.DisplayNameFor(model => model.passenger)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.chair)
             </th>
             <th></th>
         </tr>
@@ -26,10 +29,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Seats)
+                @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.compartment.Id)
+                @Html.DisplayFor(modelItem => item.passenger.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.chair.Id)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
