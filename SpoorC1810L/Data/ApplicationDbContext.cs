@@ -21,6 +21,7 @@ namespace TrainC1810L.Data
         public DbSet<TrainRoute> TrainRoute { get; set; }
         public DbSet<Compartment> compartments { get; set; }
         public DbSet<Chair> chairs { get; set; }
+        public DbSet<BookingTicket> bookingTickets { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

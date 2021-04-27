@@ -10,23 +10,23 @@ using TrainC1810L.Models;
 
 namespace TrainC1810L.Controllers
 {
-    public class ChairsController : Controller
+    public class BookingTicketsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ChairsController(ApplicationDbContext context)
+        public BookingTicketsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Chairs
+        // GET: BookingTickets
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.chairs.Include(c => c.compartment);
+            var applicationDbContext = _context.bookingTickets.Include(b => b.chair).Include(b => b.passenger);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Chairs/Details/5
+        // GET: BookingTickets/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,42 +34,45 @@ namespace TrainC1810L.Controllers
                 return NotFound();
             }
 
-            var chair = await _context.chairs
-                .Include(c => c.compartment)
+            var bookingTicket = await _context.bookingTickets
+                .Include(b => b.chair)
+                .Include(b => b.passenger)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (chair == null)
+            if (bookingTicket == null)
             {
                 return NotFound();
             }
 
-            return View(chair);
+            return View(bookingTicket);
         }
 
-        // GET: Chairs/Create
+        // GET: BookingTickets/Create
         public IActionResult Create()
         {
-            ViewData["CompartmentId"] = new SelectList(_context.compartments, "Id", "Id");
+            ViewData["ChairId"] = new SelectList(_context.chairs, "Id", "Id");
+            ViewData["PassengerId"] = new SelectList(_context.passengers, "Id", "Id");
             return View();
         }
 
-        // POST: Chairs/Create
+        // POST: BookingTickets/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Seats,CompartmentId")] Chair chair)
+        public async Task<IActionResult> Create([Bind("Id,Price,PassengerId,ChairId")] BookingTicket bookingTicket)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(chair);
+                _context.Add(bookingTicket);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CompartmentId"] = new SelectList(_context.compartments, "Id", "Id", chair.CompartmentId);
-            return View(chair);
+            ViewData["ChairId"] = new SelectList(_context.chairs, "Id", "Id", bookingTicket.ChairId);
+            ViewData["PassengerId"] = new SelectList(_context.passengers, "Id", "Id", bookingTicket.PassengerId);
+            return View(bookingTicket);
         }
 
-        // GET: Chairs/Edit/5
+        // GET: BookingTickets/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,23 +80,24 @@ namespace TrainC1810L.Controllers
                 return NotFound();
             }
 
-            var chair = await _context.chairs.FindAsync(id);
-            if (chair == null)
+            var bookingTicket = await _context.bookingTickets.FindAsync(id);
+            if (bookingTicket == null)
             {
                 return NotFound();
             }
-            ViewData["CompartmentId"] = new SelectList(_context.compartments, "Id", "Id", chair.CompartmentId);
-            return View(chair);
+            ViewData["ChairId"] = new SelectList(_context.chairs, "Id", "Id", bookingTicket.ChairId);
+            ViewData["PassengerId"] = new SelectList(_context.passengers, "Id", "Id", bookingTicket.PassengerId);
+            return View(bookingTicket);
         }
 
-        // POST: Chairs/Edit/5
+        // POST: BookingTickets/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Seats,CompartmentId")] Chair chair)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Price,PassengerId,ChairId")] BookingTicket bookingTicket)
         {
-            if (id != chair.Id)
+            if (id != bookingTicket.Id)
             {
                 return NotFound();
             }
@@ -102,12 +106,12 @@ namespace TrainC1810L.Controllers
             {
                 try
                 {
-                    _context.Update(chair);
+                    _context.Update(bookingTicket);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ChairExists(chair.Id))
+                    if (!BookingTicketExists(bookingTicket.Id))
                     {
                         return NotFound();
                     }
@@ -118,11 +122,12 @@ namespace TrainC1810L.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CompartmentId"] = new SelectList(_context.compartments, "Id", "Id", chair.CompartmentId);
-            return View(chair);
+            ViewData["ChairId"] = new SelectList(_context.chairs, "Id", "Id", bookingTicket.ChairId);
+            ViewData["PassengerId"] = new SelectList(_context.passengers, "Id", "Id", bookingTicket.PassengerId);
+            return View(bookingTicket);
         }
 
-        // GET: Chairs/Delete/5
+        // GET: BookingTickets/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,31 +135,32 @@ namespace TrainC1810L.Controllers
                 return NotFound();
             }
 
-            var chair = await _context.chairs
-                .Include(c => c.compartment)
+            var bookingTicket = await _context.bookingTickets
+                .Include(b => b.chair)
+                .Include(b => b.passenger)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (chair == null)
+            if (bookingTicket == null)
             {
                 return NotFound();
             }
 
-            return View(chair);
+            return View(bookingTicket);
         }
 
-        // POST: Chairs/Delete/5
+        // POST: BookingTickets/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var chair = await _context.chairs.FindAsync(id);
-            _context.chairs.Remove(chair);
+            var bookingTicket = await _context.bookingTickets.FindAsync(id);
+            _context.bookingTickets.Remove(bookingTicket);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ChairExists(int id)
+        private bool BookingTicketExists(int id)
         {
-            return _context.chairs.Any(e => e.Id == id);
+            return _context.bookingTickets.Any(e => e.Id == id);
         }
     }
 }

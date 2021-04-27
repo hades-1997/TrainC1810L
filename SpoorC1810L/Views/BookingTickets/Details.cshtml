@@ -1,0 +1,37 @@
+﻿@model TrainC1810L.Models.BookingTicket
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_SiderBar.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>BookingTicket</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.passenger)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.passenger.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.chair)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.chair.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

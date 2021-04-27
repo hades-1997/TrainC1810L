@@ -14,6 +14,7 @@ namespace TrainC1810L.Models
         public int TrainId { get; set; }
         public DateTime DepartureTimeTo { get; set; }
         public int Range { get; set; }
+        public ICollection<Passenger> passengers { get; set; }
 
     }
 }
