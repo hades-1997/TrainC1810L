@@ -18,6 +18,7 @@ namespace TrainC1810L.Models.ModelView
         public int Numcloums { get; set; }
         public int Numrows { get; set; }
         public int Total { get; set; }
-        public string NameCr { get; set; }
+        public int IdChair { get; set; }
+        public int IdCompart { get; set; }
     }
 }

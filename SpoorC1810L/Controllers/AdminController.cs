@@ -83,7 +83,7 @@ namespace TrainC1810L.Controllers
                                     Numcloums = c.Numcloums,
                                     Numrows = c.Numrows,
                                     Total = c.Total,
-                                    //NameCr = cr.Sign
+                                    IdChair = cr.Seats
                                 }).ToList();
             if (Compart == null)
             {
@@ -92,27 +92,12 @@ namespace TrainC1810L.Controllers
 
             var serialized = JsonConvert.SerializeObject(Compart);
             return Content(serialized, "application/json");
-            //var Compart = _context.compartments.FirstOrDefaultAsync(m => m.Id == id);
-
-            //return Json(new
-            //{ 
-            //    Id = Compart
-            //});
         }
 
-
-      
-        public IActionResult CreateBookChair()
-        {
-
-            return View();
-        }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult CreateBookChair(Chair chair)
+        public IActionResult CreateBookChair()
         {
-
             return View();
         }
     }

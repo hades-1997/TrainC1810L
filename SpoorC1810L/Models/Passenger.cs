@@ -14,8 +14,6 @@ namespace TrainC1810L.Models
         public int Total { get; set; }
         public DateTime DateOfTravel { get; set; }
         public string Class { get; set; }
-        public TrainRoute trainRoute { get; set; }
-        public int TRId { get; set; }
 
     }
 }
