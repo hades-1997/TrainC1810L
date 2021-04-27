@@ -1,0 +1,89 @@
+﻿@model TrainC1810L.Models.ModelView.Books
+
+@{
+    ViewData["Title"] = "CreateBookChair";
+    Layout = "~/Views/Shared/_SiderBar.cshtml";
+}
+
+<h1>CreateBookChair</h1>
+
+<h4>Books</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateBookChair">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TrainId" class="control-label"></label>
+                <input asp-for="TrainId" class="form-control" />
+                <span asp-validation-for="TrainId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Field" class="control-label"></label>
+                <input asp-for="Field" class="form-control" />
+                <span asp-validation-for="Field" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TrainNo" class="control-label"></label>
+                <input asp-for="TrainNo" class="form-control" />
+                <span asp-validation-for="TrainNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TrainName" class="control-label"></label>
+                <input asp-for="TrainName" class="form-control" />
+                <span asp-validation-for="TrainName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RouteFromTo" class="control-label"></label>
+                <input asp-for="RouteFromTo" class="form-control" />
+                <span asp-validation-for="RouteFromTo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DepartureTime" class="control-label"></label>
+                <input asp-for="DepartureTime" class="form-control" />
+                <span asp-validation-for="DepartureTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Toa" class="control-label"></label>
+                <input asp-for="Toa" class="form-control" />
+                <span asp-validation-for="Toa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Numcloums" class="control-label"></label>
+                <input asp-for="Numcloums" class="form-control" />
+                <span asp-validation-for="Numcloums" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Numrows" class="control-label"></label>
+                <input asp-for="Numrows" class="form-control" />
+                <span asp-validation-for="Numrows" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Total" class="control-label"></label>
+                <input asp-for="Total" class="form-control" />
+                <span asp-validation-for="Total" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdChair" class="control-label"></label>
+                <input asp-for="IdChair" class="form-control" />
+                <span asp-validation-for="IdChair" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdCompart" class="control-label"></label>
+                <input asp-for="IdCompart" class="form-control" />
+                <span asp-validation-for="IdCompart" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

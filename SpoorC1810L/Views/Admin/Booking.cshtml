@@ -1,10 +1,10 @@
 ﻿@model ICollection<TrainC1810L.Models.ModelView.Books>
-@*@model dynamic*@
 
 @{
     Layout = "~/Views/Shared/_SiderBar.cshtml";
 }
 <link href="~/admin/css/BookingVersion1.css" rel="stylesheet" />
+
 <div class="container">
     <div class="row d-flex justify-content-center">
         <form class='bookingTicket'>
@@ -53,111 +53,113 @@
             <div class="seatSelection col-lg-12">
                 <div class="seatsChart col-lg-12">
                     <p id="notification"></p>
-                    <div class="seatRow row" id="seatRow">
-                        <!--<div  id="book">-->
-                        @*<span class="seatNumber seatUnavailable" id="1_1" role="checkbox" value="45" aria-checked="false" focusable="true" tabindex="-1">1</span>*@
-                        <!--</div>-->
-
-                    </div>
+                    <div class="seatRow row" id="seatRow"></div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="form-booking">
-        <div class="row d-flex justify-content-center">
-            <div class="table-responsive booked_list">
-                <h4 align="center">Tickets Booked</h4>
-                <br />
-                <div class="seatsReceipt col-lg-12">
-                    <p>
-                        <strong>Selected Seats: <span class="seatsAmount" style="color:red;padding:0 20px;"> 0 </span></strong>
-                        <button id="btnClear" class="btn" style="margin-left: 40px; margin-bottom: 11px;"> Clear </button>
-                    </p>
+        <div class="form-booking">
+            <div class="row d-flex justify-content-center">
+                <div class="table-responsive booked_list">
+                    <h4 align="center">Tickets Booked</h4>
                     <br />
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Row</th>
-                                <th>Number of Seats</th>
-                                <th>Price</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody id="seatsList"></tbody>
-                    </table>
-                </div>
-                <br />
-                <div class="checkout col-lg-offset-6">
-                    <span>Subtotal: </span> <span class="txtSubTotal" style="color:red;padding:0 20px;"> 0.00</span>VND
-                    <button class="btn btn-primary" style="margin-left: 40px;margin-bottom: 11px;" data-toggle="modal" data-target="#myModal">Check out</button>
+                    <div class="seatsReceipt col-lg-12">
+                        <p>
+                            <strong>Selected Seats: <span class="seatsAmount" style="color:red;padding:0 20px;"> 0 </span></strong>
+                            <button id="btnClear" class="btn" style="margin-left: 40px; margin-bottom: 11px;"> Clear </button>
+                        </p>
+                        <br />
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Row</th>
+                                    <th>Number of Seats</th>
+                                    <th>Price</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody id="seatsList"></tbody>
+                        </table>
+                    </div>
+                    <br />
+                    <div class="checkout col-lg-offset-6">
+                        <span>Subtotal: </span> <span class="txtSubTotal" style="color:red;padding:0 20px;">0.00</span>VND
+                        <button class="btn btn-primary" style="margin-left: 40px;margin-bottom: 11px;" data-toggle="modal" data-target="#myModal">Check out</button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- The Modal -->
-        <div class="modal" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
+            <!-- The Modal -->
+            <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
 
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">Nhập Thông Tin Để Đặt Hàng:</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Nhập Thông Tin Để Đặt Hàng:</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
 
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="col-form-label">Name</label>
-                                    <input class="form-control" type="text" value="" id="example-text-input">
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="col-form-label" >Name</label>
+                                        <input class="form-control" type="text" value="" id="example-text-input">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="col-form-label">Age</label>
+                                        <input class="form-control" type="number" value="" id="example-text-input">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="col-form-label">Total</label>
+                                        <input class="form-control" type="number" value="" id="example-text-input">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="col-form-label">Class</label>
+                                        <input class="form-control" type="text" value="" id="example-text-input">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="col-form-label">Age</label>
-                                    <input class="form-control" type="number" value="" id="example-text-input">
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="col-form-label">Total</label>
-                                    <input class="form-control" type="number" value="" id="example-text-input">
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="col-form-label">Class</label>
-                                    <input class="form-control" type="text" value="" id="example-text-input">
+                            <div class="col-md-12">
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-success btn-sm nextButton" onclick="AddData()">
+                                        Continue
+                                    </button>
                                 </div>
                             </div>
                         </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
                     </div>
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    </div>
-
                 </div>
             </div>
         </div>
-    </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script>
     function takeData() {
         $("#seatRow #xoa").remove();
-
         $.ajax({
             type: "POST",
             dataType: "json",
             url: "/Admin/GetCompart",
-            data: { id : $("#compartment").val() },
+            data: { id: $("#compartment").val() },
             success: function (data) {
                 alert("Vui Lòng Chọn Ghế Ngồi");
                 $.each(data, function (i, item) {
                     var totalrows = item.Total;
                     var chairc = item.Id;
+                    var seatsID = item.IdChair;
+
                     var Toa = item.Toa;
                     var A = 10000;
                     var B = 11000;
@@ -166,29 +168,32 @@
                     var E = 14000;
                     var F = 15000;
                     for (var i = 1; i <= totalrows; i++) {
-                        if (chairc == 1) {
-                            var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='"+Toa+"_" + i + "' role='checkbox' value='" + A + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
-                            $('#seatRow').append(rows);
-                        } else if (chairc == 2) {
-                            var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa +"_" + i + "' role='checkbox' value='" + B + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
-                            $('#seatRow').append(rows);
-                        } else if (chairc == 3) {
-                            var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa +"_" + i + "' role='checkbox' value='" + C + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
-                            $('#seatRow').append(rows);
-                        } else if (chairc == 4) {
-                            var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa +"_" + i + "' role='checkbox' value='" + D + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
-                            $('#seatRow').append(rows);
-                        } else if (chairc == 5) {
-                            var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa +"_" + i + "' role='checkbox' value='" + E + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
+                        if (seatsID == i) {
+                            $("#seatRow #xoa").remove();
+                            var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber seatUnavailable' id='" + Toa + "_" + i + "' role='checkbox' value='" + A + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
                             $('#seatRow').append(rows);
                         } else {
-                            var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa +"_" + i + "' role='checkbox' value='" + F + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
-                            $('#seatRow').append(rows);
+                            if (chairc == 1) {
+                                var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + A + "' aria-checked='false' focusable='true' tabindex=' - 1' >" + i + "</span></div>";
+                                $('#seatRow').append(rows);
+                            } else if (chairc == 2) {
+                                var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + B + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
+                                $('#seatRow').append(rows);
+                            } else if (chairc == 3) {
+                                var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + C + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
+                                $('#seatRow').append(rows);
+                            } else if (chairc == 4) {
+                                var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + D + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
+                                $('#seatRow').append(rows);
+                            } else if (chairc == 5) {
+                                var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + E + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
+                                $('#seatRow').append(rows);
+                            } else {
+                                var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + F + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
+                                $('#seatRow').append(rows);
+                            }
                         }
-                        
                     }
-                    //<div id="1_5" role="checkbox" value="45" aria-checked="false" focusable="true" tabindex="-1" class=" seatNumber seatUnavailable">5</div>
-                    //$('#seatRow #book').append(rows);
                 });
             },
             error: function (ex) {
@@ -217,7 +222,7 @@
                 var thisId = $(this).attr('id');
                 var id = thisId.split("_");
                 var price = $(this).attr('value');
-                var seatDetails = "<td>" + id[0] + "</td> <td>" + id[1] + "<td>" + price + "VND</td>";
+                var seatDetails = "<td asp-items='" + $("#compartment").val() + "'>" + id[0] + "</td id='seats" + id[1]+"'> <td>" + id[1] + "<td>" + price + "VND</td>";
 
 
                 var freeSeats = parseInt($('.freeSeats').first().text());
@@ -229,7 +234,7 @@
                 }
 
                 // Adding this seat to the list
-                var seatDetails = "<td>" + id[0] + "</td> <td>" + id[1] + "<td>" + price + "<strong style='padding: 0 20px;'>VND</strong></td>";
+                var seatDetails = "<td asp-items='" + $("#compartment").val() + "'>" + id[0] + "</td> <td  id='seats" + id[1] +"'>" + id[1] + "<td>" + price + "<strong style='padding: 0 20px;'>VND</strong></td>";
                 $("#seatsList").append('<tr class=' + thisId + '>' + seatDetails + "  " + "<td><button style='margin-left:20px;' id='remove:" + thisId + "' class='btn btn-default btn-sm removeSeat' value='" + price + "'><strong>X</strong></button></td></tr>");
                 $(this).addClass("seatSelected");
 
@@ -288,12 +293,28 @@
                 $('.txtSubTotal').text(0);
                 $(".seatsAmount").text(0);
                 $('.seatSelected').removeClass('seatSelected');
-                $('#seatsList td').remove();
+                $('#seatsList tr').remove();
             }
         );
     });
 
     function AddData() {
-        alert ('ok');
+
+        //$.ajax({
+        //    type: "POST",
+        //    dataType: "json",
+        //    url: "/Admin/CreateBookChair",
+        //    data: { id: ''},
+        //    success: function (data)
+        //    {
+
+        //    },
+        //    error: function (ex) {
+        //        var r = jQuery.parseJSON(response.responseText);
+        //        alert("Message: " + r.Message);
+        //        alert("StackTrace: " + r.StackTrace);
+        //        alert("ExceptionType: " + r.ExceptionType);
+        //    }
+        //});
     }
 </script>

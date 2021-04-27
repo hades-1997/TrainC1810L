@@ -83,7 +83,7 @@ namespace TrainC1810L.Controllers
                                     Numcloums = c.Numcloums,
                                     Numrows = c.Numrows,
                                     Total = c.Total,
-                                    //NameCr = cr.Sign
+                                    IdChair = cr.Seats
                                 }).ToList();
             if (Compart == null)
             {
@@ -92,37 +92,12 @@ namespace TrainC1810L.Controllers
 
             var serialized = JsonConvert.SerializeObject(Compart);
             return Content(serialized, "application/json");
-            //var Compart = _context.compartments.FirstOrDefaultAsync(m => m.Id == id);
-
-            //return Json(new
-            //{ 
-            //    Id = Compart
-            //});
         }
 
-        public IActionResult CreateBookChair()
-        {
-            return View();
-        }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async  Task<IActionResult> CreateBookChair(Chair chair, Passenger passenger, BookingTicket bookingTicket)
+        public IActionResult CreateBookChair()
         {
-
-            _context.Add(chair);
-            await _context.SaveChangesAsync();
-            ViewData["CompartmentId"] = (_context.compartments, "Id", "Id", chair.CompartmentId);
-
-            _context.Add(passenger);
-            await _context.SaveChangesAsync();
-
-
-            _context.Add(bookingTicket);
-            await _context.SaveChangesAsync();
-            ViewData["ChairId"] = (_context.chairs, "Id", "Id", bookingTicket.ChairId);
-            ViewData["PassengerId"] = (_context.passengers, "Id", "Id", bookingTicket.PassengerId);
-
             return View();
         }
     }
