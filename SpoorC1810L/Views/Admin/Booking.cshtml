@@ -60,9 +60,9 @@
                 <div class="seatsChart col-lg-12">
                     <p id="notification"></p>
                     <div class="seatRow row" id="seatRow">
-                        <div class=" col-md-2" id="book">
+                        <!--<div  id="book">-->
                             @*<span class="seatNumber seatUnavailable" id="1_1" role="checkbox" value="45" aria-checked="false" focusable="true" tabindex="-1">1</span>*@
-                        </div>
+                        <!--</div>-->
 
                     </div>
                 </div>
@@ -105,17 +105,28 @@
     function takeData() {
         var compart = $("#compartment").val();
         alert(compart);
-        $("#seatRow #book span").remove();
+        $("#seatRow #xoa").remove();
         $.ajax({
             type: "POST",
+            dataType: "json",
             url: "/Admin/GetCompart",
             data: { id : $("#compartment").val() },
             success: function (data) {
-                var items = '';
-                //$.each(data, function (i, item) {
-                //    var rows = "<span class='seatNumber seatUnavailable' id='1_1' role='checkbox' value='45' aria-checked='false' focusable='true' tabindex=' - 1'>1</span>"; /*" + item.compartment +"*/
-                //    $('#seatRow #book').append(rows);
-                //});
+                alert("done");
+                console.log(data);
+                //alert("done");
+                //alert(data);
+                //var items = '';
+                $.each(data, function (i, item) {
+                    
+                    var totalrows = item.Total;
+                    for (var i = 1 ; i <= totalrows; i++) {
+                        var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='"+ item.NameCr+"_" + i + "' role='checkbox' value='1_" + i +"' aria-checked='false' focusable='true' tabindex=' - 1'>" +i+"</span></div>";
+                        $('#seatRow').append(rows);
+                    }
+                    //<div id="1_5" role="checkbox" value="45" aria-checked="false" focusable="true" tabindex="-1" class=" seatNumber seatUnavailable">5</div>
+                    //$('#seatRow #book').append(rows);
+                });
             },
             error: function (ex) {
                 var r = jQuery.parseJSON(response.responseText);
