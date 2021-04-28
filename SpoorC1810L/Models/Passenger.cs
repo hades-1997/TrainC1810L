@@ -12,7 +12,6 @@ namespace TrainC1810L.Models
         public int Age { get; set; }
         public bool Gender { get; set; }
         public int Total { get; set; }
-        public DateTime DateOfTravel { get; set; }
         public string Class { get; set; }
 
     }
