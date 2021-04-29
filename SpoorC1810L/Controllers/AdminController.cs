@@ -131,8 +131,8 @@ namespace TrainC1810L.Controllers
             _context.bookingTickets.AddRange(bookings);
             _context.SaveChanges();
 
-            return RedirectToAction(nameof(Index));
-            
+            return Json(bookings);
+
         }
     }
 }
