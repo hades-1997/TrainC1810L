@@ -10,8 +10,8 @@ using TrainC1810L.Data;
 namespace TrainC1810L.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210428053810_passenger1")]
-    partial class passenger1
+    [Migration("20210428121359_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

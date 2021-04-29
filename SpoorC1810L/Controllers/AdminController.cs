@@ -78,6 +78,7 @@ namespace TrainC1810L.Controllers
                            select new Books
                            {
                                Id = c.Id,
+                               Toa = c.Toa,
                                Total = c.Total
                            }).ToList();
             if (Compart == null)
@@ -107,9 +108,11 @@ namespace TrainC1810L.Controllers
             var chair = JsonConvert.SerializeObject(Query);
             return Content(chair, "application/json");
         }
+
         [HttpPost]
-        public IActionResult CreateBookChair(string name, int age, bool gt, int total, string info, int seats, int CompartmentId, int price)
+        public IActionResult CreateBookChair(string name, int age, bool gt, int total, string info, int seats, int compartmentId, int price)
         {
+            // new Passenger{ Name = name, Age = age, Gender = gt,Total = total , Class = info  }
             var passenger = new Passenger[]
             {
                 new Passenger{ Name = name, Age = age, Gender = gt,Total = total , Class = info  }
@@ -117,18 +120,19 @@ namespace TrainC1810L.Controllers
             _context.passengers.AddRange(passenger);
             _context.SaveChanges();
             int passid = _context.passengers.Max(item => item.Id);
-            //Passenger.Id = passenger.Id;
+            //Seats = seats , CompartmentId = CompartmentId
             var chair = new Chair[]
             {
-                new Chair{ Seats = seats , CompartmentId = CompartmentId}
+                new Chair{ Seats = seats , CompartmentId = compartmentId}
             };
             _context.chairs.AddRange(chair);
             _context.SaveChanges();
             int chairid = _context.chairs.Max(item => item.Id);
 
+            //Price=price, PassengerId= passid ,ChairId= chairid
             var bookings = new BookingTicket[]
             {
-                new BookingTicket{Price=price, PassengerId= passid ,ChairId= chairid}
+                new BookingTicket{Price=10000, PassengerId= passid ,ChairId= chairid}
             };
             _context.bookingTickets.AddRange(bookings);
             _context.SaveChanges();
