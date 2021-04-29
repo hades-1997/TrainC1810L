@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TrainC1810L.Migrations
 {
-    public partial class Init : Migration
+    public partial class TrainDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -301,6 +301,7 @@ namespace TrainC1810L.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Seats = table.Column<int>(nullable: false),
+                    Price = table.Column<int>(nullable: false),
                     CompartmentId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -391,14 +392,14 @@ namespace TrainC1810L.Migrations
                 column: "PassengerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_chairs_CompartmentId",
-                table: "chairs",
-                column: "CompartmentId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_compartments_TrainId",
                 table: "compartments",
                 column: "TrainId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_chairs_CompartmentId",
+                table: "chairs",
+                column: "CompartmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_stations_RailwayId",

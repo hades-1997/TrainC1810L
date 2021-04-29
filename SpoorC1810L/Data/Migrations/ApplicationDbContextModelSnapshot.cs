@@ -254,6 +254,9 @@ namespace TrainC1810L.Migrations
                     b.Property<int>("CompartmentId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
                     b.Property<int>("Seats")
                         .HasColumnType("int");
 

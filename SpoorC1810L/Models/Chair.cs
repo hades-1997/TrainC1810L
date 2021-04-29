@@ -10,6 +10,7 @@ namespace TrainC1810L.Models
     {
         public int Id { get; set; }
         public int Seats { get; set; }
+        public int Price { get; set; }
         public Compartment compartment { get; set; }
         public int CompartmentId { get; set; }
     }

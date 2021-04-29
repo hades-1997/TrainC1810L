@@ -10,8 +10,8 @@ using TrainC1810L.Data;
 namespace TrainC1810L.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210428121359_Init")]
-    partial class Init
+    [Migration("20210429054116_TrainDatabase")]
+    partial class TrainDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -254,6 +254,9 @@ namespace TrainC1810L.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CompartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Price")
                         .HasColumnType("int");
 
                     b.Property<int>("Seats")
