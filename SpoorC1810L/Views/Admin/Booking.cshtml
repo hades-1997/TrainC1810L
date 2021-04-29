@@ -93,7 +93,7 @@
                             <button id="btnClear" class="btn" style="margin-left: 40px; margin-bottom: 11px;"> Clear </button>
                         </p>
                         <br />
-                        <table class="table table-bordered" id="table-chair">
+                        <table class="table table-bordered" id="tablechair">
                             <thead>
                                 <tr>
                                     <th>Row</th>
@@ -136,50 +136,50 @@
                     var D = 13000;
                     var E = 14000;
                     var F = 15000;
-                        $.ajax({
-                            type: "POST",
-                            dataType: "json",
-                            url: "/Admin/GetChair",
-                            data: { idchair: $("#compartment").val() },
-                            success: function (data) {
-                                for (var i = 1; i <= totalrows; i++) {
-                                    $.each(data, function (key, ctem) {
-                                        let seatsID = ctem.Seats;
-                                        if (seatsID == i) {
-                                            var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber seatUnavailable' id='" + Toa + "_" + i + "' role='checkbox' value='" + A + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
-                                            $('#seatRow').append(rows);
-                                            return false
-                                        } else {
-                                            if (key === data.length - 1) {
-                                               if (chairc == 1) {
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        url: "/Admin/GetChair",
+                        data: { idchair: $("#compartment").val() },
+                        success: function (data) {
+                            for (var i = 1; i <= totalrows; i++) {
+                                $.each(data, function (key, ctem) {
+                                    let seatsID = ctem.Seats;
+                                    if (seatsID == i) {
+                                        var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber seatUnavailable' id='" + Toa + "_" + i + "' role='checkbox' value='" + A + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
+                                        $('#seatRow').append(rows);
+                                        return false
+                                    } else {
+                                        if (key === data.length - 1) {
+                                            if (chairc == 1) {
                                                 var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + A + "' aria-checked='false' focusable='true' tabindex=' - 1' >" + i + "</span></div>";
                                                 $('#seatRow').append(rows);
-                                                } else if (chairc == 2) {
-                                                    var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + B + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
-                                                    $('#seatRow').append(rows);
-                                                } else if (chairc == 3) {
-                                                    var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + C + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
-                                                    $('#seatRow').append(rows);
-                                                } else if (chairc == 4) {
-                                                    var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + D + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
-                                                    $('#seatRow').append(rows);
-                                                } else if (chairc == 5) {
-                                                    var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + E + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
-                                                    $('#seatRow').append(rows);
-                                                } else {
-                                                    var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + F + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
-                                                    $('#seatRow').append(rows);
-                                                }
+                                            } else if (chairc == 2) {
+                                                var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + B + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
+                                                $('#seatRow').append(rows);
+                                            } else if (chairc == 3) {
+                                                var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + C + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
+                                                $('#seatRow').append(rows);
+                                            } else if (chairc == 4) {
+                                                var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + D + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
+                                                $('#seatRow').append(rows);
+                                            } else if (chairc == 5) {
+                                                var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + E + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
+                                                $('#seatRow').append(rows);
+                                            } else {
+                                                var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + F + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
+                                                $('#seatRow').append(rows);
                                             }
-                                            
                                         }
-                                    });
-                                    
-                                }
+
+                                    }
+                                });
+
                             }
-                        
-                        }); 
-                   
+                        }
+
+                    });
+
                 });
             },
             error: function (ex) {
@@ -283,7 +283,6 @@
     });
     function AddData() {
         var idcompart = $("#compartment").val();
-        alert(idcompart);
         var name = $("#Name").val();
         var age = $("#Age").val();
         var gender = $("#Gender").val();
@@ -297,7 +296,7 @@
         $.ajax({
             type: "POST",
             dataType: "json",
-            url: "/Admin/CreateBookChair",
+            url: "/Admin/CreatePassenger",
             data: {
                 Name: name,
                 Age: age,
@@ -306,28 +305,30 @@
                 Class: info,
             },
             success: function (data) {
-                var myTab = document.getElementById('table-chair');
-                for (i = 1; i < myTab.rows.length; i++) {
-                    var objCells = myTab.rows.item(i).cells;
-                    for (var j = 1; j < 3; j++) {
-
-                        var element = objCells.item(1).innerHTML;
-                        var price = objCells.item(2).innerHTML;
-                    }
-                    $.ajax({
-                        type: "POST",
-                        dataType: "json",
-                        url: "/Admin/CreateBookChair",
-                        data: {
-                            seats: element,
-                            compartmentId: idcompart,
-                            Price: price
-                        },
-                        success: function (data) {
-                            alert("done data");
-                        }
-                    });
-                }
+            }
+        });
+        var myTab = document.getElementById('tablechair');
+        var ListOfChair = [];
+        for (i = 1; i < myTab.rows.length; i++) {
+            var objCells = myTab.rows.item(i).cells;
+            for (var j = 1; j < 3; j++) {
+                var Seats = objCells.item(1).innerHTML;
+                var Price = objCells.item(2).innerHTML; 
+                var compartmentid = idcompart;
+                var listchair = { compartmentid, Seats, Price};
+            }
+            ListOfChair.push(listchair);
+        }
+        var Chair = {
+            ChairList: ListOfChair
+        }
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "/Admin/CreateBookChair",
+            data: Chair,
+            success: function (data) {
+                alert(data);
             }
         });
         

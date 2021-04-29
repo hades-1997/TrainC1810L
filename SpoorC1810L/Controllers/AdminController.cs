@@ -38,11 +38,8 @@ namespace TrainC1810L.Controllers
             {
                 return NotFound();
             }
-            var booking = await (from tr in _context.TrainRoute
-                                 join t in _context.trains on tr.TrainId equals t.Id
-                                 join s in _context.stations on tr.StationId equals s.Id
+            var booking = await (from t in _context.trains
                                  join c in _context.compartments on t.Id equals c.TrainId
-                                 //join cr in _context.chairs on c.Id equals cr.CompartmentId
                                  where (t.Id == id)
                                  select new Books
                                  {
@@ -70,9 +67,7 @@ namespace TrainC1810L.Controllers
         public IActionResult GetCompart(int id)
         {
 
-            var Compart = (from tr in _context.TrainRoute
-                           join t in _context.trains on tr.TrainId equals t.Id
-                           join c in _context.compartments on t.Id equals c.TrainId
+            var Compart = (from c in _context.compartments
 
                            where (c.Id == id)
                            select new Books
@@ -108,36 +103,49 @@ namespace TrainC1810L.Controllers
             var chair = JsonConvert.SerializeObject(Query);
             return Content(chair, "application/json");
         }
-
         [HttpPost]
-        public IActionResult CreateBookChair(string name, int age, bool gt, int total, string info, int seats, int compartmentId, int price)
+        public IActionResult CreatePassenger(string name, int age, bool gt, int total, string info, int price)
         {
-            // new Passenger{ Name = name, Age = age, Gender = gt,Total = total , Class = info  }
+            //new Passenger { Name = name, Age = age, Gender = gt, Total = total, Class = info }
             var passenger = new Passenger[]
             {
                 new Passenger{ Name = name, Age = age, Gender = gt,Total = total , Class = info  }
             };
             _context.passengers.AddRange(passenger);
             _context.SaveChanges();
-            int passid = _context.passengers.Max(item => item.Id);
-            //Seats = seats , CompartmentId = CompartmentId
-            var chair = new Chair[]
-            {
-                new Chair{ Seats = seats , CompartmentId = compartmentId}
-            };
-            _context.chairs.AddRange(chair);
-            _context.SaveChanges();
-            int chairid = _context.chairs.Max(item => item.Id);
+            return View();
+        }
 
-            //Price=price, PassengerId= passid ,ChairId= chairid
+        [HttpPost]
+        public async Task<IActionResult> CreateBookChair(List<Chair> ChairList)
+        {
+
+            _context.chairs.AddRange(ChairList);
+            await _context.SaveChangesAsync();
+            int chairid = _context.chairs.Max(item => item.Id);
+            int passid = _context.passengers.DefaultIfEmpty().Max(r => r == null ? 0 : r.Id);
             var bookings = new BookingTicket[]
             {
-                new BookingTicket{Price=10000, PassengerId= passid ,ChairId= chairid}
+                new BookingTicket{PassengerId= passid ,ChairId= chairid}
             };
             _context.bookingTickets.AddRange(bookings);
             _context.SaveChanges();
+
             return RedirectToAction(nameof(Index));
             
         }
     }
 }
+
+//var ListOfChair = new JavaScriptSerializer().Deserialize<Chair>(json);
+//IEnumerable<Chair>  listOfChair
+//, string name, int age, bool gt, int total, string info, int price
+////Seats = seats , CompartmentId = CompartmentIds
+//var chair = new Chair[]
+//{
+//    new Chair{ Seats = seats , CompartmentId = compartmentId}
+//};
+//ChairList.ForEach(n => _context.chairs.Add(n));
+//_context.SaveChangesAsync();
+//int passid = _context.passengers.Max(item => item.Id);
+////Price=price, PassengerId= passid ,ChairId= chairid
