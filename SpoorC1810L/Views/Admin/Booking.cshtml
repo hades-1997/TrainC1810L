@@ -143,34 +143,36 @@
                             data: { idchair: $("#compartment").val() },
                             success: function (data) {
                                 for (var i = 1; i <= totalrows; i++) {
-                                    var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + A + "' aria-checked='false' focusable='true' tabindex=' - 1' >" + i + "</span></div>";
-                                    $('#seatRow').append(rows);
-                                    $.each(data, function (c, ctem) {
+                                    $.each(data, function (key, ctem) {
                                         let seatsID = ctem.Seats;
-                                        //if (seatsID == i) {
-                                        //    var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber seatUnavailable' id='" + Toa + "_" + i + "' role='checkbox' value='" + A + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
-                                        //    $('#seatRow').append(rows);
-                                        //} else {
-                                        //    if (chairc == 1) {
-                                        //        var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + A + "' aria-checked='false' focusable='true' tabindex=' - 1' >" + i + "</span></div>";
-                                        //        $('#seatRow').append(rows);
-                                        //    } else if (chairc == 2) {
-                                        //        var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + B + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
-                                        //        $('#seatRow').append(rows);
-                                        //    } else if (chairc == 3) {
-                                        //        var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + C + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
-                                        //        $('#seatRow').append(rows);
-                                        //    } else if (chairc == 4) {
-                                        //        var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + D + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
-                                        //        $('#seatRow').append(rows);
-                                        //    } else if (chairc == 5) {
-                                        //        var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + E + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
-                                        //        $('#seatRow').append(rows);
-                                        //    } else {
-                                        //        var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + F + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
-                                        //        $('#seatRow').append(rows);
-                                        //    }
-                                        //}
+                                        if (seatsID == i) {
+                                            var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber seatUnavailable' id='" + Toa + "_" + i + "' role='checkbox' value='" + A + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
+                                            $('#seatRow').append(rows);
+                                            return false
+                                        } else {
+                                            if (key === data.length - 1) {
+                                               if (chairc == 1) {
+                                                var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + A + "' aria-checked='false' focusable='true' tabindex=' - 1' >" + i + "</span></div>";
+                                                $('#seatRow').append(rows);
+                                                } else if (chairc == 2) {
+                                                    var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + B + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
+                                                    $('#seatRow').append(rows);
+                                                } else if (chairc == 3) {
+                                                    var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + C + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
+                                                    $('#seatRow').append(rows);
+                                                } else if (chairc == 4) {
+                                                    var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + D + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
+                                                    $('#seatRow').append(rows);
+                                                } else if (chairc == 5) {
+                                                    var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + E + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
+                                                    $('#seatRow').append(rows);
+                                                } else {
+                                                    var rows = "<div class='col-md-2' id='xoa'><span class='seatNumber' id='" + Toa + "_" + i + "' role='checkbox' value='" + F + "' aria-checked='false' focusable='true' tabindex=' - 1'>" + i + "</span></div>";
+                                                    $('#seatRow').append(rows);
+                                                }
+                                            }
+                                            
+                                        }
                                     });
                                     
                                 }
@@ -201,12 +203,10 @@
                 refreshCounter();
             }
             else {
-                // else, select it
-                // getting values from Seat
                 var thisId = $(this).attr('id');
                 var id = thisId.split("_");
                 var price = $(this).attr('value');
-                var seatDetails = "<td asp-items='" + $("#compartment").val() + "'>" + id[0] + "</td id='seats'> <td>" + id[1] + "<td>" + price + "</td>";
+                var seatDetails = "<td>" + id[0] + "</td id='seats'> <td>" + id[1] + "<td>" + price + "</td>";
 
 
                 var freeSeats = parseInt($('.freeSeats').first().text());
@@ -218,7 +218,7 @@
                 }
 
                 // Adding this seat to the list
-                var seatDetails = "<td asp-items='" + $("#compartment").val() + "'>" + id[0] + "</td> <td  id='seats'>" + id[1] + "<td>" + price + "</td>";
+                var seatDetails = "<td>" + id[0] + "</td> <td  id='seats'>" + id[1] + "<td>" + price + "</td>";
                 $("#seatsList").append('<tr class=' + thisId + '>' + seatDetails + "  " + "<td><button style='margin-left:20px;' id='remove:" + thisId + "' class='btn btn-default btn-sm removeSeat' value='" + price + "'><strong>X</strong></button></td></tr>");
                 $(this).addClass("seatSelected");
 
@@ -282,6 +282,8 @@
         );
     });
     function AddData() {
+        var idcompart = $("#compartment").val();
+        alert(idcompart);
         var name = $("#Name").val();
         var age = $("#Age").val();
         var gender = $("#Gender").val();
@@ -292,7 +294,6 @@
             var gt = "false";
         }
         var info = $("#Info").val();
-        alert(info);
         $.ajax({
             type: "POST",
             dataType: "json",
@@ -306,27 +307,24 @@
             },
             success: function (data) {
                 var myTab = document.getElementById('table-chair');
-                // LOOP THROUGH EACH ROW OF THE TABLE AFTER HEADER.
                 for (i = 1; i < myTab.rows.length; i++) {
                     var objCells = myTab.rows.item(i).cells;
-                    // LOOP THROUGH EACH CELL OF THE CURENT ROW TO READ CELL VALUES.
                     for (var j = 1; j < 3; j++) {
+
                         var element = objCells.item(1).innerHTML;
                         var price = objCells.item(2).innerHTML;
                     }
-                    var idcompart = $("#compartment").val();
                     $.ajax({
                         type: "POST",
                         dataType: "json",
                         url: "/Admin/CreateBookChair",
                         data: {
-                            Seats: element,
-                            CompartmentId: idcompart,
+                            seats: element,
+                            compartmentId: idcompart,
                             Price: price
                         },
                         success: function (data) {
                             alert("done data");
-                            console.log()
                         }
                     });
                 }

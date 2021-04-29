@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TrainC1810L.Migrations
 {
-    public partial class Init1 : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,18 +47,27 @@ namespace TrainC1810L.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "fares",
+                name: "Books",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Distance = table.Column<int>(nullable: false),
-                    TypeOfCompartment = table.Column<int>(nullable: false),
-                    TypeOfTrain = table.Column<int>(nullable: false)
+                    TrainId = table.Column<int>(nullable: false),
+                    Field = table.Column<string>(nullable: true),
+                    TrainNo = table.Column<int>(nullable: false),
+                    TrainName = table.Column<string>(nullable: true),
+                    RouteFromTo = table.Column<string>(nullable: true),
+                    DepartureTime = table.Column<DateTime>(nullable: false),
+                    Toa = table.Column<string>(nullable: true),
+                    Numcloums = table.Column<int>(nullable: false),
+                    Numrows = table.Column<int>(nullable: false),
+                    Total = table.Column<int>(nullable: false),
+                    IdChair = table.Column<int>(nullable: false),
+                    IdCompart = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_fares", x => x.Id);
+                    table.PrimaryKey("PK_Books", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -67,14 +76,11 @@ namespace TrainC1810L.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Field = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Age = table.Column<int>(nullable: false),
-                    Gender = table.Column<string>(nullable: false),
+                    Gender = table.Column<bool>(nullable: false),
                     Total = table.Column<int>(nullable: false),
-                    DateOfTravel = table.Column<DateTime>(nullable: false),
-                    Class = table.Column<string>(nullable: true),
-                    TrainNo = table.Column<string>(nullable: true)
+                    Class = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -238,6 +244,29 @@ namespace TrainC1810L.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "compartments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Toa = table.Column<string>(nullable: true),
+                    Numrows = table.Column<int>(nullable: false),
+                    Numcloums = table.Column<int>(nullable: false),
+                    Total = table.Column<int>(nullable: false),
+                    TrainId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_compartments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_compartments_trains_TrainId",
+                        column: x => x.TrainId,
+                        principalTable: "trains",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TrainRoute",
                 columns: table => new
                 {
@@ -261,6 +290,53 @@ namespace TrainC1810L.Migrations
                         name: "FK_TrainRoute_trains_TrainId",
                         column: x => x.TrainId,
                         principalTable: "trains",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "chairs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Seats = table.Column<int>(nullable: false),
+                    CompartmentId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_chairs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_chairs_compartments_CompartmentId",
+                        column: x => x.CompartmentId,
+                        principalTable: "compartments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "bookingTickets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Price = table.Column<int>(nullable: false),
+                    PassengerId = table.Column<int>(nullable: false),
+                    ChairId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_bookingTickets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_bookingTickets_chairs_ChairId",
+                        column: x => x.ChairId,
+                        principalTable: "chairs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_bookingTickets_passengers_PassengerId",
+                        column: x => x.PassengerId,
+                        principalTable: "passengers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -305,6 +381,26 @@ namespace TrainC1810L.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_bookingTickets_ChairId",
+                table: "bookingTickets",
+                column: "ChairId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_bookingTickets_PassengerId",
+                table: "bookingTickets",
+                column: "PassengerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_chairs_CompartmentId",
+                table: "chairs",
+                column: "CompartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_compartments_TrainId",
+                table: "compartments",
+                column: "TrainId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_stations_RailwayId",
                 table: "stations",
                 column: "RailwayId");
@@ -338,10 +434,10 @@ namespace TrainC1810L.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "fares");
+                name: "bookingTickets");
 
             migrationBuilder.DropTable(
-                name: "passengers");
+                name: "Books");
 
             migrationBuilder.DropTable(
                 name: "TrainRoute");
@@ -353,13 +449,22 @@ namespace TrainC1810L.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+                name: "chairs");
+
+            migrationBuilder.DropTable(
+                name: "passengers");
+
+            migrationBuilder.DropTable(
                 name: "stations");
 
             migrationBuilder.DropTable(
-                name: "trains");
+                name: "compartments");
 
             migrationBuilder.DropTable(
                 name: "Railway");
+
+            migrationBuilder.DropTable(
+                name: "trains");
         }
     }
 }
