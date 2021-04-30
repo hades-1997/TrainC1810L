@@ -46,10 +46,14 @@
                         <span class="span-area_tag span-select" id="span-area_tag">
                             <select name="routeto" class="area_tag">
                                 <option value="">Ga Đến</option>
-                                @foreach (var item in Model)
-                                {
-                                <option value="@item.train.RouteFromTo">@Html.DisplayFor(modelItem => item.train.RouteFromTo)</option>
-                                }
+                                <option value="Hà Nội">Hà Nội</option>
+                                <option value="Hà Nội">Thanh Hóa</option>
+                                <option value="Hà Nội">Nghệ An</option>
+                                <option value="Hà Nội">Quảng Bình</option>
+                                <option value="Hà Nội">Quảng Ngãi</option>
+                                <option value="Hà Nội">Sài Gòn</option>
+                                <option value="Hà Nội">Đồng Nai</option>
+                                <option value="Hà Nội">Bình Dương</option>
                             </select>
                         </span>
                         <input style="float: none;" type="date" name="setTodaysDate">

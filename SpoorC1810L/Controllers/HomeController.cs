@@ -50,7 +50,7 @@ namespace SpoorC1810L.Controllers
         {
               
             return View("SearchTrain", await _context.TrainRoute.Include(p => p.train).Include(p => p.station)
-                .Where(t => t.train.RouteFromTo.Contains(routeto) && t.StationId==(routefrom) && t.DepartureTimeTo == setTodaysDate)
+                .Where(t => t.train.RouteFromTo.Contains(routeto) && t.StationId==(routefrom))
                 .Take(6).ToListAsync());
         }
     }
