@@ -9,6 +9,7 @@ namespace TrainC1810L.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int PNRno { get; set; }
         public int Age { get; set; }
         public bool Gender { get; set; }
         public int Total { get; set; }

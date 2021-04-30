@@ -54,7 +54,7 @@ namespace TrainC1810L.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Age,Gender,Total,Class")] Passenger passenger)
+        public async Task<IActionResult> Create([Bind("Id,Name,PNRno,Age,Gender,Total,Class")] Passenger passenger)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace TrainC1810L.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Age,Gender,Total,Class")] Passenger passenger)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,PNRno,Age,Gender,Total,Class")] Passenger passenger)
         {
             if (id != passenger.Id)
             {
