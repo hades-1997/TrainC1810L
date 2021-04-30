@@ -21,7 +21,7 @@
                 <div id="vieclam" class="tabcontent active">
                     <form method="get" id="searchform" class="search-company-form" asp-action="ShowTrain">
                         <div class="company-type">
-                            <ul class="list-company">
+                            @*<ul class="list-company">
                                 <li class="item-company">
                                     <label class="title-company">
                                         <input type="radio" name="company_type" value="xkld" checked="checked">
@@ -34,7 +34,7 @@
                                         <span class="radio-field-text">Khứ Hồi</span>
                                     </label>
                                 </li>
-                            </ul>
+                            </ul>*@
                         </div>
                         <span class="span-area_tag span-select" id="span-area_tag">
                             <select name="routefrom" class="area_tag">
@@ -53,7 +53,7 @@
                             </select>
                         </span>
                         <input style="float: none;" type="date" name="setTodaysDate">
-                        <input style="float: none;" type="date" value="">
+                        @*<input style="float: none;" type="date" value="">*@
                         <input type="submit" value="Tìm kiếm">
                     </form>
                 </div>
