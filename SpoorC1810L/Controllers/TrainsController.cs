@@ -57,6 +57,7 @@ namespace SpoorC1810L.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Field,TrainNo,TrainName,RouteFromTo,DepartureTime")] Train train)
         {
+            //long result = DateTimeOffset.train.DepartureTime.ToUnixTimeSeconds();
             if (ModelState.IsValid)
             {
                 _context.Add(train);
