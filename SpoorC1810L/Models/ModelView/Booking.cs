@@ -14,6 +14,8 @@ namespace TrainC1810L.Models.ModelView
         public string NamePasser { get; set; }
         public int Age { get; set; }
         public int TotalChair { get; set; }
+        public int PassengerId { get; set; }
+        public int ChairId { get; set; }
 
     }
 }
