@@ -1,0 +1,109 @@
+﻿@model IEnumerable<TrainC1810L.Models.ModelView.Booking>
+
+@{
+    ViewData["Title"] = "Bill";
+    Layout = "~/Views/Shared/_SiderBar.cshtml";
+}
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Chuyến tàu
+                </th>
+                <th>
+                    Mã tàu
+                </th>
+                <th>
+                    Khách Hàng
+                </th>
+                <th>
+                    Giá tiền
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td >
+                    @item.Id
+                </td>
+                <td>
+                    @item.Field
+                </td>
+                <td>
+                    @item.TraiNo
+                </td>
+                <td>
+                    @item.NamePasser
+                </td>
+                <td>
+                    @item.TotalChair
+                </td>
+
+            </tr>
+            }
+        </tbody>
+    </table>
+    <div class="form-group">
+        <label for="example-number-input" class="col-form-label">Thanh Toán: </label>
+        <div class="col-sm-6">
+            <input class="form-control" type="number" value="" id="Received" placeholder="Money Received" onfocusout="myFunction()">
+        </div>
+        <span style="font-size:50px;margin-left: 18px;"> - </span>
+        @foreach (var item in Model)
+        {
+            <span style="display:none" id="IdBook">@item.Id</span>
+            <span style="display:none" id="TotalPrice">@item.Price</span>
+            <div class="col-sm-6">
+                <input class="form-control" type="number" value="@item.Price" id="Total" disabled>
+            </div>
+        }
+    </div>
+    <div class="form-group col-sm-6">
+        <label for="example-text-input" class="col-form-label">Refunds</label>
+        <input class="form-control" type="text"  id="Refunds" disabled value="">
+    </div>
+    <button class="btn btn-primary" type="submit" onclick="bill()">Thanh Toán</button>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+    function myFunction() {
+        var MoneyReceived = $("#Received").val();
+        var Total = $("#TotalPrice").html();
+        if (MoneyReceived < Total) {
+            alert(" Số Dư Không Đủ !!!")
+        } else {
+            var Refunds = MoneyReceived - Total;
+            $('#Refunds').val($('#Refunds').val() + Refunds);
+        }
+    }
+    function bill()
+    {
+        var MoneyReceived = $("#Received").val();
+        var Total = $("#Total").val();
+        var statusbill = 'true';
+        var Id = $("#IdBook").html();
+        var Refund = $("#Refunds").val();
+        alert(Id + Refund);
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "/Admin/BillResult",
+            data: {
+                MoneyReceived: MoneyReceived,
+                Refunds: Refund,
+                BookingTicketID: Id,
+                Status: statusbill
+            },
+            success: function (data) {
+
+            }
+        });
+    }
+</script>
