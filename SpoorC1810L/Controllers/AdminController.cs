@@ -126,13 +126,39 @@ namespace TrainC1810L.Controllers
             int passid = _context.passengers.DefaultIfEmpty().Max(r => r == null ? 0 : r.Id);
             var bookings = new BookingTicket[]
             {
-                new BookingTicket{PassengerId= passid ,ChairId= chairid}
+                new BookingTicket{PassengerId= passid ,ChairId= chairid,Status = false}
             };
             _context.bookingTickets.AddRange(bookings);
             _context.SaveChanges();
-
             return Json(bookings);
 
+        }
+
+        public IActionResult Bill(int id)
+        {
+            var IdBooking =  _context.bookingTickets.FindAsync(id);
+            var query = (from bk in _context.bookingTickets
+                         join c in _context.chairs on bk.ChairId equals c.Id
+                         join p in _context.passengers on bk.PassengerId equals p.Id
+                         join cp in _context.compartments on c.CompartmentId equals cp.Id
+                         join t in _context.trains on cp.TrainId equals t.Id
+                         where (bk.Id == id)
+                         select new Booking
+                         {
+                            Id = bk.Id,
+                            Field = t.Field,
+                            TraiNo = t.TrainNo,
+                             NamePasser = p.Name,
+                             Price = c.Price * p.Total,
+                             TotalChair = p.Total
+                         }).ToList();
+
+            return View(query);
+        }
+
+        public async Task<IActionResult> BillResult()
+        {
+            return View();
         }
     }
 }

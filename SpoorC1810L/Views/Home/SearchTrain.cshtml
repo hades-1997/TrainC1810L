@@ -23,17 +23,19 @@
                             @foreach (var item in Model)
                             {
                 <li class="job-box">
-                    <a class="clearfix" href="">
+                    
                         <span class="new-mark">new</span>
                         <div class="content">
-                            <h2 class="title-new">
-                                @Html.DisplayFor(modelItem => item.train.Field)
-                            </h2>
-                            <p class="salary">1.000.000 - 1.500.000 VND</p>
-                            <p class="local font-awesome">@Html.DisplayFor(modelItem => item.train.RouteFromTo)</p>
-                            @*<ul class="occupation font-awesome"><li></li></ul>*@
+                            <a class="clearfix" asp-action="ResultSearch" asp-route-id="@item.Id">
+                                <h2 class="title-new">
+                                    @Html.DisplayFor(modelItem => item.train.Field)
+                                </h2>
+                            </a>
+                                <p class="salary">1.000.000 - 1.500.000 VND</p>
+                                <p class="local font-awesome">@Html.DisplayFor(modelItem => item.train.RouteFromTo)</p>
+                                @*<ul class="occupation font-awesome"><li></li></ul>*@
                         </div>
-                    </a>
+                  
                 </li>}
                         </ul>
                     </div>

@@ -1,0 +1,47 @@
+﻿@model TrainC1810L.Models.Bill
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_SiderBar.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Bill</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="MoneyReceived" class="control-label"></label>
+                <input asp-for="MoneyReceived" class="form-control" />
+                <span asp-validation-for="MoneyReceived" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Refunds" class="control-label"></label>
+                <input asp-for="Refunds" class="form-control" />
+                <span asp-validation-for="Refunds" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalMoney" class="control-label"></label>
+                <input asp-for="TotalMoney" class="form-control" />
+                <span asp-validation-for="TotalMoney" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BookingTicketID" class="control-label"></label>
+                <select asp-for="BookingTicketID" class="form-control" asp-items="ViewBag.BookingTicketID"></select>
+                <span asp-validation-for="BookingTicketID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

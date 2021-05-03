@@ -13,7 +13,6 @@ namespace TrainC1810L.Controllers
     public class BookingTicketsController : Controller
     {
         private readonly ApplicationDbContext _context;
-
         public BookingTicketsController(ApplicationDbContext context)
         {
             _context = context;
@@ -55,11 +54,9 @@ namespace TrainC1810L.Controllers
         }
 
         // POST: BookingTickets/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Price,PassengerId,ChairId")] BookingTicket bookingTicket)
+        public async Task<IActionResult> Create([Bind("Id,Price,Status,PassengerId,ChairId")] BookingTicket bookingTicket)
         {
             if (ModelState.IsValid)
             {
@@ -91,11 +88,9 @@ namespace TrainC1810L.Controllers
         }
 
         // POST: BookingTickets/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Price,PassengerId,ChairId")] BookingTicket bookingTicket)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Price,Status,PassengerId,ChairId")] BookingTicket bookingTicket)
         {
             if (id != bookingTicket.Id)
             {
@@ -162,5 +157,6 @@ namespace TrainC1810L.Controllers
         {
             return _context.bookingTickets.Any(e => e.Id == id);
         }
+                
     }
 }

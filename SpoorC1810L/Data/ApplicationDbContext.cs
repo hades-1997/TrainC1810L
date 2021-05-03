@@ -28,6 +28,7 @@ namespace TrainC1810L.Data
             base.OnModelCreating(builder);
         }
         public DbSet<TrainC1810L.Models.ModelView.Books> Books { get; set; }
+        public DbSet<TrainC1810L.Models.Bill> Bill { get; set; }
 
         
 

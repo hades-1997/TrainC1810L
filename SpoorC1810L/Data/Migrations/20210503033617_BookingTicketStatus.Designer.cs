@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrainC1810L.Data;
 
 namespace TrainC1810L.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210503033617_BookingTicketStatus")]
+    partial class BookingTicketStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -217,32 +219,6 @@ namespace TrainC1810L.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("TrainC1810L.Models.Bill", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BookingTicketID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MoneyReceived")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Refunds")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalMoney")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookingTicketID");
-
-                    b.ToTable("Bill");
                 });
 
             modelBuilder.Entity("TrainC1810L.Models.BookingTicket", b =>
@@ -540,15 +516,6 @@ namespace TrainC1810L.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("TrainC1810L.Models.Bill", b =>
-                {
-                    b.HasOne("TrainC1810L.Models.BookingTicket", "bookingticket")
-                        .WithMany("bills")
-                        .HasForeignKey("BookingTicketID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -8,25 +8,26 @@ using Microsoft.EntityFrameworkCore;
 using TrainC1810L.Data;
 using TrainC1810L.Models;
 
-
-namespace SpoorC1810L.Controllers
+namespace TrainC1810L.Controllers
 {
-    public class TrainsController : Controller
+    public class BillsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public TrainsController(ApplicationDbContext context)
+        public BillsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Trains
-        public async Task<IActionResult> Index()
+        // GET: Bills
+        public IActionResult Index(int? id)
         {
-            return View(await _context.trains.ToListAsync());
+            //var applicationDbContext = _context.Bill.Include(b => b.bookingticket);
+            //return View(await applicationDbContext.ToListAsync());
+            return View();
         }
 
-        // GET: Trains/Details/5
+        // GET: Bills/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,40 +35,42 @@ namespace SpoorC1810L.Controllers
                 return NotFound();
             }
 
-            var train = await _context.trains
+            var bill = await _context.Bill
+                .Include(b => b.bookingticket)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (train == null)
+            if (bill == null)
             {
                 return NotFound();
             }
 
-            return View(train);
+            return View(bill);
         }
 
-        // GET: Trains/Create
+        // GET: Bills/Create
         public IActionResult Create()
         {
+            ViewData["BookingTicketID"] = new SelectList(_context.bookingTickets, "Id", "Id");
             return View();
         }
 
-        // POST: Trains/Create
+        // POST: Bills/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Field,TrainNo,TrainName,RouteFromTo,DepartureTime")] Train train)
+        public async Task<IActionResult> Create([Bind("Id,MoneyReceived,Refunds,TotalMoney,BookingTicketID")] Bill bill)
         {
-            //long result = DateTimeOffset.train.DepartureTime.ToUnixTimeSeconds();
             if (ModelState.IsValid)
             {
-                _context.Add(train);
+                _context.Add(bill);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(train);
+            ViewData["BookingTicketID"] = new SelectList(_context.bookingTickets, "Id", "Id", bill.BookingTicketID);
+            return View(bill);
         }
 
-        // GET: Trains/Edit/5
+        // GET: Bills/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,22 +78,23 @@ namespace SpoorC1810L.Controllers
                 return NotFound();
             }
 
-            var train = await _context.trains.FindAsync(id);
-            if (train == null)
+            var bill = await _context.Bill.FindAsync(id);
+            if (bill == null)
             {
                 return NotFound();
             }
-            return View(train);
+            ViewData["BookingTicketID"] = new SelectList(_context.bookingTickets, "Id", "Id", bill.BookingTicketID);
+            return View(bill);
         }
 
-        // POST: Trains/Edit/5
+        // POST: Bills/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Field,TrainNo,TrainName,RouteFromTo,DepartureTime")] Train train)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,MoneyReceived,Refunds,TotalMoney,BookingTicketID")] Bill bill)
         {
-            if (id != train.Id)
+            if (id != bill.Id)
             {
                 return NotFound();
             }
@@ -99,12 +103,12 @@ namespace SpoorC1810L.Controllers
             {
                 try
                 {
-                    _context.Update(train);
+                    _context.Update(bill);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TrainExists(train.Id))
+                    if (!BillExists(bill.Id))
                     {
                         return NotFound();
                     }
@@ -115,10 +119,11 @@ namespace SpoorC1810L.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(train);
+            ViewData["BookingTicketID"] = new SelectList(_context.bookingTickets, "Id", "Id", bill.BookingTicketID);
+            return View(bill);
         }
 
-        // GET: Trains/Delete/5
+        // GET: Bills/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -126,30 +131,31 @@ namespace SpoorC1810L.Controllers
                 return NotFound();
             }
 
-            var train = await _context.trains
+            var bill = await _context.Bill
+                .Include(b => b.bookingticket)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (train == null)
+            if (bill == null)
             {
                 return NotFound();
             }
 
-            return View(train);
+            return View(bill);
         }
 
-        // POST: Trains/Delete/5
+        // POST: Bills/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var train = await _context.trains.FindAsync(id);
-            _context.trains.Remove(train);
+            var bill = await _context.Bill.FindAsync(id);
+            _context.Bill.Remove(bill);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TrainExists(int id)
+        private bool BillExists(int id)
         {
-            return _context.trains.Any(e => e.Id == id);
+            return _context.Bill.Any(e => e.Id == id);
         }
     }
 }
