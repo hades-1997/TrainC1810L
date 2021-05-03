@@ -23,12 +23,13 @@ namespace TrainC1810L.Data
         public DbSet<Compartment> compartments { get; set; }
         public DbSet<Chair> chairs { get; set; }
         public DbSet<BookingTicket> bookingTickets { get; set; }
+        public DbSet<Bill> Bill { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
         }
         public DbSet<TrainC1810L.Models.ModelView.Books> Books { get; set; }
-        public DbSet<TrainC1810L.Models.Bill> Bill { get; set; }
+
 
         
 

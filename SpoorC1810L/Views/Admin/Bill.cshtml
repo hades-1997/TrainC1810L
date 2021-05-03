@@ -60,6 +60,8 @@
         {
             <span style="display:none" id="IdBook">@item.Id</span>
             <span style="display:none" id="TotalPrice">@item.Price</span>
+            <span style="display:none" id="PassengerId">@item.PassengerId</span>
+            <span style="display:none" id="ChairId">@item.ChairId</span>
             <div class="col-sm-6">
                 <input class="form-control" type="number" value="@item.Price" id="Total" disabled>
             </div>
@@ -76,11 +78,12 @@
     function myFunction() {
         var MoneyReceived = $("#Received").val();
         var Total = $("#TotalPrice").html();
-        if (MoneyReceived < Total) {
-            alert(" Số Dư Không Đủ !!!")
-        } else {
+        if (MoneyReceived >= Total) {
             var Refunds = MoneyReceived - Total;
             $('#Refunds').val($('#Refunds').val() + Refunds);
+        } else {
+            alert(" Số Dư Không Đủ !!!")
+            
         }
     }
     function bill()
@@ -90,7 +93,23 @@
         var statusbill = 'true';
         var Id = $("#IdBook").html();
         var Refund = $("#Refunds").val();
-        alert(Id + Refund);
+        var passengerId = $("#PassengerId").html();
+        var chairId = $("#ChairId").html();
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "/Admin/Ticket",
+            data: {
+                MoneyReceived: MoneyReceived,
+                Refunds: Refund,
+                BookingTicketID: Id,
+                Status: statusbill,
+                PassengerId: passengerId,
+                ChairId: chairId,
+            },
+            success: function (data) {
+            }
+        });
         $.ajax({
             type: "POST",
             dataType: "json",
@@ -99,10 +118,13 @@
                 MoneyReceived: MoneyReceived,
                 Refunds: Refund,
                 BookingTicketID: Id,
-                Status: statusbill
+                Status: statusbill,
+                PassengerId: passengerId,
+                ChairId: chairId,
             },
             success: function (data) {
-
+                alert("Đăng kí thành công !!!");
+                window.location.href = '/BookingTickets/Index';
             }
         });
     }
