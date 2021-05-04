@@ -50,7 +50,12 @@
                 @Html.DisplayFor(modelItem => item.Age)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Gender)
+
+                @if (item.Gender==true) {
+
+<span>Nam</span>}
+                else { <span>Nữ</span>}
+                @*@Html.DisplayFor(modelItem => item.Gender)*@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Total)

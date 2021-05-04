@@ -20,11 +20,10 @@ namespace TrainC1810L.Controllers
         }
 
         // GET: Bills
-        public IActionResult Index(int? id)
+        public async Task<IActionResult> Index()
         {
-            //var applicationDbContext = _context.Bill.Include(b => b.bookingticket);
-            //return View(await applicationDbContext.ToListAsync());
-            return View();
+            var applicationDbContext = _context.Bill.Include(b => b.bookingticket);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Bills/Details/5
