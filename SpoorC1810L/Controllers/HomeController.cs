@@ -82,7 +82,6 @@ namespace SpoorC1810L.Controllers
             {
                 return NotFound();
             }
-
             return View(HomeResRult);
         }
 
@@ -104,6 +103,8 @@ namespace SpoorC1810L.Controllers
             var chair = JsonConvert.SerializeObject(Query);
             return Content(chair, "application/json");
         }
+
+
         [HttpPost]
         public IActionResult CreatePassenger(string name, int age, bool gt, int total, string info, int price)
         {
@@ -135,5 +136,35 @@ namespace SpoorC1810L.Controllers
             return Json(bookings);
 
         }
+
+        public async Task<IActionResult> TicketBook()
+        {
+            int id = _context.passengers.DefaultIfEmpty().Max(r => r == null ? 0 : r.Id);
+            var Bookticket = await (from bt in _context.bookingTickets
+                                    join c in _context.chairs on bt.ChairId equals c.Id
+                                    join p in _context.passengers on bt.PassengerId equals p.Id
+                                    join cs in _context.compartments on c.CompartmentId equals cs.Id
+                                    join t in _context.trains on cs.TrainId equals t.Id
+                                     where (p.Id == id)
+                                     select new Bills
+                                     {
+                                         Id = p.Id,
+                                         NamePass = p.Name,
+                                         PNRNO = p.PNRno,
+                                         Age = p.Age,
+                                         Field = t.Field,
+                                         TrainNo = t.TrainNo,
+                                         Timefrom = t.DepartureTime,
+                                         Seats = c.Seats,
+                                         Status = bt.Status,
+                                         Price = c.Price
+                                     }).ToListAsync();
+            if (Bookticket == null)
+            {
+                return NotFound();
+            }
+            return View(Bookticket);
+        }
+
     }
 }

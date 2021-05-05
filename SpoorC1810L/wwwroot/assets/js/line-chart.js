@@ -1,4 +1,4 @@
-/*--------------  coin_sales1 start ------------*/
+﻿/*--------------  coin_sales1 start ------------*/
 if ($('#coin_sales1').length) {
     var ctx = document.getElementById("coin_sales1").getContext('2d');
     var chart = new Chart(ctx, {
@@ -1177,7 +1177,7 @@ if ($('#seolinechart1').length) {
         data: {
             labels: ["January", "February", "March", "April", "May", "June", "July", "January", "February", "March", "April", "May"],
             datasets: [{
-                label: "Likes",
+                label: "Tiền Nhận",
                 backgroundColor: "rgba(104, 124, 247, 0.6)",
                 borderColor: '#8596fe',
                 data: [18, 41, 86, 49, 20, 35, 20, 50, 49, 30, 45, 25],
