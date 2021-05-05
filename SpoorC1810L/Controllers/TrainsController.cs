@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using TrainC1810L.Models;
 
 namespace SpoorC1810L.Controllers
 {
+    [Authorize]
     public class TrainsController : Controller
     {
         private readonly ApplicationDbContext _context;
