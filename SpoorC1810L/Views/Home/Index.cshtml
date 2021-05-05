@@ -155,7 +155,7 @@
                         <span class="new-mark">new</span>
                         <div class="content">
                             <h2 class="title-new">
-                                @Html.DisplayFor(modelItem => item.train.Field)
+                                <a asp-area="" asp-action="ResultSearch" asp-route-id="@item.TrainId"> @Html.DisplayFor(modelItem => item.train.Field)</a>
                             </h2>
                             <p class="salary">1.000.000 - 1.500.000 VND</p>
                             <p class="local font-awesome">@Html.DisplayFor(modelItem => item.train.RouteFromTo)</p>

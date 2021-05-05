@@ -28,10 +28,28 @@ namespace TrainC1810L.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            var admin = await (from b in _context.Bill 
+                                 join bk in _context.bookingTickets on b.BookingTicketID equals bk.Id
+                                 join p in _context.passengers on bk.PassengerId equals p.Id
+                                 select new Admin
+                                 {
+                                     Namepass = p.Name,
+                                     Age = p.Age,
+                                     PNRno = p.PNRno,
+                                     Gender = p.Gender,
+                                     MoneyReceived= b.MoneyReceived,
+                                     Refunds = b.Refunds,
+                                     
+                                 }).ToListAsync();
+            return View(admin);
+        }
+        public async Task<IActionResult> datve()
+        {
             var applicationDbContext = await _context.TrainRoute.Include(t => t.station).Include(t => t.train).ToListAsync();
 
             return View(applicationDbContext);
         }
+
         public async Task<IActionResult> Booking(int? id)
         {
             if (id == null)
