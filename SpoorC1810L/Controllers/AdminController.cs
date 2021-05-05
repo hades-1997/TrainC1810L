@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -14,6 +15,7 @@ using TrainC1810L.Models.ModelView;
 
 namespace TrainC1810L.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly ILogger<HomeController> _logger;

@@ -11,7 +11,7 @@ using TrainC1810L.Data;
 
 namespace SpoorC1810L.Controllers
 {
-   // [Authorize]
+    [Authorize]
     public class RailwaysController : Controller
     {
         private readonly ApplicationDbContext _context;
