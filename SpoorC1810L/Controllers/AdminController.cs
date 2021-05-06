@@ -59,6 +59,7 @@ namespace TrainC1810L.Controllers
                 return NotFound();
             }
             var booking = await (from t in _context.trains
+                                 join tr in _context.TrainRoute on t.Id equals tr.TrainId
                                  join c in _context.compartments on t.Id equals c.TrainId
                                  where (t.Id == id)
                                  select new Books
@@ -73,7 +74,8 @@ namespace TrainC1810L.Controllers
                                      Toa = c.Toa,
                                      Numcloums = c.Numcloums,
                                      Numrows = c.Numrows,
-                                     Total = c.Total
+                                     Total = c.Total,
+                                     Range = tr.Range
                                  }).ToListAsync();
             if (booking == null)
             {
@@ -124,12 +126,12 @@ namespace TrainC1810L.Controllers
             return Content(chair, "application/json");
         }
         [HttpPost]
-        public IActionResult CreatePassenger(string name, int age, bool gt, int total, string info, int price)
+        public IActionResult CreatePassenger(string name, int age, bool Gender, int total, string Class, int price, int pnrno)
         {
             //new Passenger { Name = name, Age = age, Gender = gt, Total = total, Class = info }
             var passenger = new Passenger[]
             {
-                new Passenger{ Name = name, Age = age, Gender = gt,Total = total , Class = info  }
+                new Passenger{  Name = name, Age = age, Gender = Gender,Total = total , Class = Class, PNRno = pnrno }
             };
             _context.passengers.AddRange(passenger);
             _context.SaveChanges();

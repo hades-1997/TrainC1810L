@@ -48,7 +48,7 @@
                 @if (item.Status==true)
                 {}else{<a asp-action="Edit" asp-route-id="@item.Id"> Edit |</a><a asp-controller="Admin" asp-action="Bill" asp-route-id="@item.Id">Bill |</a>}
 
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.Id">Hủy Vé</a>
             </td>
         </tr>
 }

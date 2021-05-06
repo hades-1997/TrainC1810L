@@ -1746,7 +1746,7 @@ table th {
     font-size: 0;
     border: 0;
     border-bottom: 4px solid #173963;
-    background: url(https://localhost:44395/home/wp-content/uploads/2020/08/search-solid.png) no-repeat center, linear-gradient(to bottom, #3aaeff 0%, #3aaeff 13%, #3aaeff 17%, #3aaeff 19%, #257ed9 84%, #257ed9 100%);
+    background: url(https://localhost:44395/home/uploads/2020/08/search-solid.png) no-repeat center, linear-gradient(to bottom, #3aaeff 0%, #3aaeff 13%, #3aaeff 17%, #3aaeff 19%, #257ed9 84%, #257ed9 100%);
 }
 
 @media screen and (max-width: 991px) {
@@ -9468,9 +9468,10 @@ body.home #content .banner-home .slick-1 .slick-slide {
         color: #fff;
         font-weight: bold;
         text-align: center;
+        background-position: top;
+        background-repeat: no-repeat;
         background-size: cover;
-        background-position: center;
-        background-image: url(/home/wp-content/uploads/2020/08/banner5.jpg);
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(/home/uploads/2020/08/unnamed.jpg);
     }
 
 @media screen and (max-width: 550px) {
@@ -9774,12 +9775,12 @@ body #content #searchform input[type="submit"] {
     border-radius: 4px;
     background-color: #f1f1f1;
     width: calc(100% - 30% - 50% - 30px);
-    max-width: 60px;
+    max-width: 100px;
     padding: 0 10px;
     font-size: 0;
     border: 0;
     border-bottom: 4px solid #173963;
-    background: url(https://localhost:44395/home/wp-content/uploads/2020/08/search-solid.png) no-repeat center, linear-gradient(to bottom, #3aaeff 0%, #3aaeff 13%, #3aaeff 17%, #3aaeff 19%, #257ed9 84%, #257ed9 100%);
+    background: url(https://localhost:44395/home/uploads/2020/08/search-solid.png) no-repeat center, linear-gradient(to bottom, #3aaeff 0%, #3aaeff 13%, #3aaeff 17%, #3aaeff 19%, #257ed9 84%, #257ed9 100%);
 }
 
 @media screen and (max-width: 991px) and (max-width: 767px) {
