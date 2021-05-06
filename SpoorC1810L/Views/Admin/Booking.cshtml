@@ -63,15 +63,25 @@
                 <div class="table-responsive booked_list">
                     <h4 align="center">Tickets Booked</h4>
                     <br />
+                    @foreach (var item in Model)
+                    {
+                        <span id="range" style="display:none">@item.Range</span>
+                    }
                     <div class="col-lg-12">
                         <div class="form-group">
-                            <label class="col-form-label">Name</label>
+                            <label class="col-form-label">Họ Và Tên</label>
                             <input class="form-control" type="text" value="" id="Name">
                         </div>
                     </div>
                     <div class="col-lg-12">
                         <div class="form-group">
-                            <label for="example-text-input" class="col-form-label">Age</label>
+                            <label for="example-text-input" class="col-form-label">Số CMND</label>
+                            <input class="form-control" type="number" value="" id="pnrno">
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="example-text-input" class="col-form-label">Tuổi</label>
                             <input class="form-control" type="number" value="" id="Age">
                         </div>
                     </div>
@@ -83,7 +93,7 @@
                     </div>
                     <div class="col-lg-12">
                         <div class="form-group">
-                            <label for="example-text-input" class="col-form-label">Class</label>
+                            <label for="example-text-input" class="col-form-label">Giới thiệu</label>
                             <input class="form-control" type="text" value="" id="Info">
                         </div>
                     </div>
@@ -119,6 +129,8 @@
 <script>
     function takeData() {
         $("#seatRow #xoa").remove();
+        var range = $("#range").html();
+        //alert(range);
         $.ajax({
             type: "POST",
             dataType: "json",
@@ -130,12 +142,12 @@
                     var totalrows = item.Total;
                     var chairc = item.Id;
                     var Toa = item.Toa;
-                    var A = 10000;
-                    var B = 11000;
-                    var C = 12000;
-                    var D = 13000;
-                    var E = 14000;
-                    var F = 15000;
+                    var A = 1000 * range;
+                    var B = 1100 * range;
+                    var C = 1200 * range;
+                    var D = 1300 * range;
+                    var E = 1400 * range;
+                    var F = 1500 * range;
                     $.ajax({
                         type: "POST",
                         dataType: "json",
@@ -288,11 +300,11 @@
         var gender = $("#Gender").val();
         var Total = $(".seatSelected").length;
         if (gender == "on") {
-            var gt = "true";
+            var gt = true;
         } else {
-            var gt = "false";
+            var gt = false;
         }
-        var info = $("#Info").val();
+        var Class = $("#Info").val();
         $.ajax({
             type: "POST",
             dataType: "json",
@@ -302,7 +314,8 @@
                 Age: age,
                 Gender: gt,
                 Total: Total,
-                Class: info,
+                Class: Class,
+                pnrno: pnrno
             },
             success: function (data) {
             }
@@ -331,7 +344,6 @@
                 window.location.href = '/BookingTickets/Index';
             }
         });
-        
     }
 
 </script>

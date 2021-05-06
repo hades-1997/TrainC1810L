@@ -148,10 +148,15 @@ namespace TrainC1810L.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var bookingTicket = await _context.bookingTickets.FindAsync(id);
-            _context.bookingTickets.Remove(bookingTicket);
+        {      
+            var x = (from c in _context.chairs
+                     join bt in _context.bookingTickets on c.Id equals bt.ChairId
+                     where (bt.Id == id)
+                     select c).FirstOrDefault();
+
+               _context.chairs.Remove(x);
             await _context.SaveChangesAsync();
+          
             return RedirectToAction(nameof(Index));
         }
 

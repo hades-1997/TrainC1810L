@@ -118,10 +118,13 @@
                     </form>
                 </div>
                 <div id="xkld" class="tabcontent">
-
-                    <form method="get" id="searchform" class="search-company-form" action="">
+                    <form method="post" id="searchform" class="search-company-form" asp-action="Showve">
                         <div class="company-type">
-                            Trang Website đang phát triển
+                            <div class="search-block-top">
+                                <label for="ve" class="assistive-text" style="padding-left:20px;">Tìm Vé : </label>
+                                <input style="float: none;" type="number" name="ve" id="ve" placeholder="Tìm kiếm" value="">
+                                <input type="submit" value="Tìm kiếm">
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -130,23 +133,20 @@
                 <ul>
                     @foreach (var item in Model)
                     {
-        <li>
-            <a href="">
-                <time datetime="@Html.DisplayFor(modelItem => item.train.DepartureTime)">@Html.DisplayFor(modelItem => item.train.DepartureTime)</time>
-                <span>
-                    @Html.DisplayFor(modelItem => item.train.Field)
-                </span>
-            </a>
-        </li>
-}
-
+                        <li>
+                                <time datetime="@Html.DisplayFor(modelItem => item.train.DepartureTime)">@Html.DisplayFor(modelItem => item.train.DepartureTime)</time>
+                                <span>
+                                    <a asp-area="" asp-action="ResultSearch" asp-route-id="@item.TrainId"> @Html.DisplayFor(modelItem => item.train.Field)</a>
+                                </span>
+                        </li>
+                     }
                 </ul>
             </div>
             <div class="section job">
                 <div class="wrap">
                     <div class="section-title"><span>Các chuyến xe trong mới nhất</span></div>
                     <div class="special-interns special-skills">
-                        <!--<h2 class="section-subtitle"><span>Thực tập sinh</span></h2>-->
+                        <h2 class="section-subtitle"><span>Chuyến xe trong ngày</span></h2>
                         <ul class="slider-homepage content-loop">
                             @foreach (var item in Model)
                             {

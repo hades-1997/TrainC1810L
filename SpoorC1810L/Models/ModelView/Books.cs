@@ -20,5 +20,6 @@ namespace TrainC1810L.Models.ModelView
         public int Total { get; set; }
         public int IdChair { get; set; }
         public int IdCompart { get; set; }
+        public int Range { get; set; }
     }
 }
