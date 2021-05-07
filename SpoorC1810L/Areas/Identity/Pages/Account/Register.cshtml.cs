@@ -45,6 +45,7 @@ namespace SpoorC1810L.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            public int Id { get; set; }
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]

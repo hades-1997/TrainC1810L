@@ -27,8 +27,10 @@ namespace TrainC1810L.Data
         public DbSet<BookingTicket> bookingTickets { get; set; }
         public DbSet<Bill> Bill { get; set; }
         public DbSet<ProjectRole> roles { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            //builder.Entity<ApplicationUser>().HasKey(m => m.);
             base.OnModelCreating(builder);
         }
         public DbSet<TrainC1810L.Models.ModelView.Books> Books { get; set; }

@@ -22,13 +22,15 @@ namespace TrainC1810L.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<IdentityUser> _userManager;
         private const string SessionChair = "SessionChair";
 
-        public AdminController(ILogger<HomeController> logger, ApplicationDbContext context, RoleManager<IdentityRole> roleManager)
+        public AdminController(ILogger<HomeController> logger, ApplicationDbContext context, RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
         {
             _logger = logger;
             _context = context;
             _roleManager = roleManager;
+            _userManager = userManager;
         }
         public async Task<IActionResult> Index()
         {
@@ -224,11 +226,10 @@ namespace TrainC1810L.Controllers
             }
             return View();
         }
-        [HttpGet]
-        public IActionResult ListRole()
+        public async Task<ActionResult> ListUser()
         {
-            var roles = _roleManager.Roles;
-            return View(roles.ToListAsync());
+            var users = await _userManager.Users.ToListAsync();
+            return View(users);
         }
     }
 }
