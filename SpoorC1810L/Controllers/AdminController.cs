@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -20,13 +21,14 @@ namespace TrainC1810L.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private const string SessionChair = "SessionChair";
 
-        public AdminController(ILogger<HomeController> logger, ApplicationDbContext context)
+        public AdminController(ILogger<HomeController> logger, ApplicationDbContext context, RoleManager<IdentityRole> roleManager)
         {
             _logger = logger;
             _context = context;
-
+            _roleManager = roleManager;
         }
         public async Task<IActionResult> Index()
         {
@@ -206,6 +208,27 @@ namespace TrainC1810L.Controllers
             _context.Bill.AddRange(bills);
             await _context.SaveChangesAsync();
             return Json(bills);
+        }
+       
+        public IActionResult CreateRole()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateRole(ProjectRole roles)
+        {
+            var roleExist = await _roleManager.RoleExistsAsync(roles.RoleName);
+            if (!roleExist)
+            {
+                var result = await _roleManager.CreateAsync(new IdentityRole(roles.RoleName));
+            }
+            return View();
+        }
+        [HttpGet]
+        public IActionResult ListRole()
+        {
+            var roles = _roleManager.Roles;
+            return View(roles.ToListAsync());
         }
     }
 }
