@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -8,6 +9,7 @@ using SpoorC1810L.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using TrainC1810L.Data;
 using TrainC1810L.Interfaces;
@@ -22,29 +24,32 @@ namespace TrainC1810L.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<IdentityUser> _userManager;
         private const string SessionChair = "SessionChair";
 
-        public AdminController(ILogger<HomeController> logger, ApplicationDbContext context, RoleManager<IdentityRole> roleManager)
+        public AdminController(ILogger<HomeController> logger, ApplicationDbContext context, 
+            RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
         {
             _logger = logger;
             _context = context;
             _roleManager = roleManager;
+            _userManager = userManager;
         }
         public async Task<IActionResult> Index()
         {
-            var admin = await (from b in _context.Bill 
-                                 join bk in _context.bookingTickets on b.BookingTicketID equals bk.Id
-                                 join p in _context.passengers on bk.PassengerId equals p.Id
-                                 select new Admin
-                                 {
-                                     Namepass = p.Name,
-                                     Age = p.Age,
-                                     PNRno = p.PNRno,
-                                     Gender = p.Gender,
-                                     MoneyReceived= b.MoneyReceived,
-                                     Refunds = b.Refunds,
-                                     
-                                 }).ToListAsync();
+            var admin = await (from b in _context.Bill
+                               join bk in _context.bookingTickets on b.BookingTicketID equals bk.Id
+                               join p in _context.passengers on bk.PassengerId equals p.Id
+                               select new Admin
+                               {
+                                   Namepass = p.Name,
+                                   Age = p.Age,
+                                   PNRno = p.PNRno,
+                                   Gender = p.Gender,
+                                   MoneyReceived = b.MoneyReceived,
+                                   Refunds = b.Refunds,
+
+                               }).ToListAsync();
             return View(admin);
         }
         public async Task<IActionResult> datve()
@@ -113,12 +118,12 @@ namespace TrainC1810L.Controllers
         public IActionResult GetChair(int idchair)
         {
             var Query = (from c in _context.compartments
-                           join cs in _context.chairs on c.Id equals cs.CompartmentId
-                           where (c.Id == idchair)
-                           select new Chairs
-                           {
-                               Seats = cs.Seats
-                           }).ToList();
+                         join cs in _context.chairs on c.Id equals cs.CompartmentId
+                         where (c.Id == idchair)
+                         select new Chairs
+                         {
+                             Seats = cs.Seats
+                         }).ToList();
             if (Query == null)
             {
                 //return BadRequest(Compart.Error.Message);
@@ -199,7 +204,7 @@ namespace TrainC1810L.Controllers
         public async Task<IActionResult> BillResult(int MoneyReceived, int Refunds, int BookingTicketID)
         {
 
-            
+
             //MoneyReceived = MoneyReceived, Refunds = Refunds,TotalMoney=0, BookingTicketID = BookingTicketID
             var bills = new Bill[]
             {
@@ -209,7 +214,7 @@ namespace TrainC1810L.Controllers
             await _context.SaveChangesAsync();
             return Json(bills);
         }
-       
+
         public IActionResult CreateRole()
         {
             return View();
@@ -225,23 +230,44 @@ namespace TrainC1810L.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult ListRole()
+        public async Task<IActionResult> ListUser()
         {
-            var roles = _roleManager.Roles;
-            return View(roles.ToListAsync());
+            var users = await (from u in _userManager.Users
+                         join ur in _context.UserRoles on u.Id equals ur.UserId
+                         join r in _roleManager.Roles on ur.RoleId equals r.Id
+                         select new ApplicationUser
+                         {
+                             Id = u.Id,
+                             UserName = u.UserName,
+                             Email = u.Email,
+                             Name = r.Name,
+                             EmailConfirmed = u.EmailConfirmed
+                         }).ToListAsync();
+            return View(users);
         }
+
+        public async Task<IActionResult> UpdateEmail(string id)
+        {
+            var ApUser = await _userManager.FindByIdAsync(id);
+            if (ApUser != null)
+            {
+                ApUser.EmailConfirmed = true;
+
+                var result = await _userManager.UpdateAsync(ApUser);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListUser");
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+            }
+            return View();
+        }
+
     }
 }
-
-//var ListOfChair = new JavaScriptSerializer().Deserialize<Chair>(json);
-//IEnumerable<Chair>  listOfChair
-//, string name, int age, bool gt, int total, string info, int price
-////Seats = seats , CompartmentId = CompartmentIds
-//var chair = new Chair[]
-//{
-//    new Chair{ Seats = seats , CompartmentId = compartmentId}
-//};
-//ChairList.ForEach(n => _context.chairs.Add(n));
-//_context.SaveChangesAsync();
-//int passid = _context.passengers.Max(item => item.Id);
-////Price=price, PassengerId= passid ,ChairId= chairid

@@ -1,24 +1,40 @@
-﻿@model IEnumerable<ProjectRole>
+﻿@model IEnumerable<TrainC1810L.Models.ModelView.User>
 
 @{
-    ViewData["Title"] = "Roles";
+    ViewData["Title"] = "ListRole";
     Layout = "~/Views/Shared/_SiderBar.cshtml";
 }
 
-<h1>List Roles</h1>
+<h1>ListRole</h1>
 
-@foreach (var item in Model)
-{
-    <div class="card">
-        <div class="card-header">
-            @item.Id
-        </div>
-        <div class="card-body">
-            @item.RoleName
-        </div>
-        <div class="card-footer">
-            <a class="btn btn-primary">Edit</a>
-            <a class="btn btn-danger">Delete</a>
-        </div>
-    </div>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               UserName
+            </th>
+            <th>
+                Email
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+               123
+            </td>
+            <td>
+              @item.UserName
+            </td>
+            <td>
+
+            </td>
+        </tr>
 }
+    </tbody>
+</table>
