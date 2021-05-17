@@ -269,5 +269,17 @@ namespace TrainC1810L.Controllers
             return View();
         }
 
+        public IActionResult StationTrain()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ShowStation(string MaTau)
+        {
+            return View("ShowLichTrinh", await _context.TrainRoute.Include(p => p.train).Include(p => p.station)
+               .Where(t => t.train.TrainName.Contains(MaTau)).OrderBy(p => p.DepartureTimeTo).ToListAsync());
+        }
+
     }
 }

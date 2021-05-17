@@ -1,0 +1,21 @@
+﻿@model IEnumerable<TrainC1810L.Models.TrainRoute>
+@{
+    ViewData["Title"] = "ShowLichTrinh";
+    Layout = "~/Views/Shared/_SiderBar.cshtml";
+}
+<link href="~/css/Station.css" rel="stylesheet" />
+<br />
+<br />
+<section>
+    <br><br>
+    <h1><span>Lịch Trình Tàu Di Chuyển</span></h1>
+    <br><br>
+        <div class="breadcrumb flat">
+                    <a href="" class="active">@Model.Select(x =>x.station.Name).Take(1).First()</a>
+            @foreach (var item in Model)
+            {
+                <a href="">@item.train.RouteFromTo</a>
+            }
+
+        </div>
+</section>
