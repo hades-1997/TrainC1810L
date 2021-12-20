@@ -16,6 +16,7 @@ using Microsoft.Extensions.Logging;
 
 namespace SpoorC1810L.Areas.Identity.Pages.Account
 {
+    [Authorize]
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
@@ -79,7 +80,8 @@ namespace SpoorC1810L.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, "Passenger");
+                    //C1810LTrain
+                     await _userManager.AddToRoleAsync(user, "Passenger");
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -95,7 +97,8 @@ namespace SpoorC1810L.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        //return RedirectToPage("/Identity/Account/Login");
+                        return RedirectToPage("Login");
                     }
                     else
                     {

@@ -48,11 +48,11 @@ namespace SpoorC1810L.Controllers
 
         //POST/home/showtrain
 
-        public async Task<IActionResult> ShowTrain(string routeto , int routefrom, DateTime setTodaysDate)
+        public async Task<IActionResult> ShowTrain(string routeto, int routefrom, DateTime setTodaysDate)
         {
             var tgian = DateTimeOffset.Now.ToUnixTimeSeconds();
             return View("SearchTrain", await _context.TrainRoute.Include(p => p.train).Include(p => p.station)
-                .Where(t => t.train.RouteFromTo.Contains(routeto) && t.StationId==(routefrom) && t.DepartureTimeTo >= (setTodaysDate)).Take(6).ToListAsync());
+                .Where(t => t.train.RouteFromTo.Contains(routeto) && t.StationId == (routefrom) && t.DepartureTimeTo >= (setTodaysDate)).Take(6).ToListAsync());
         }
 
         public async Task<IActionResult> Showve(int ve)
@@ -64,26 +64,26 @@ namespace SpoorC1810L.Controllers
             //                 Id = p.Id
             //             };
             var idpass = _context.passengers.Where(x => x.PNRno == ve).SingleOrDefault();
-            
+
             var vexe = await (from bt in _context.bookingTickets
-                                    join c in _context.chairs on bt.ChairId equals c.Id
-                                    join p in _context.passengers on bt.PassengerId equals p.Id
-                                    join cs in _context.compartments on c.CompartmentId equals cs.Id
-                                    join t in _context.trains on cs.TrainId equals t.Id
-                                    where (p.Id == idpass.Id)
-                                    select new Bills
-                                    {
-                                        Id = p.Id,
-                                        NamePass = p.Name,
-                                        PNRNO = p.PNRno,
-                                        Age = p.Age,
-                                        Field = t.Field,
-                                        TrainNo = t.TrainNo,
-                                        Timefrom = t.DepartureTime,
-                                        Seats = c.Seats,
-                                        Status = bt.Status,
-                                        Price = c.Price
-                                    }).ToListAsync();
+                              join c in _context.chairs on bt.ChairId equals c.Id
+                              join p in _context.passengers on bt.PassengerId equals p.Id
+                              join cs in _context.compartments on c.CompartmentId equals cs.Id
+                              join t in _context.trains on cs.TrainId equals t.Id
+                              where (p.Id == idpass.Id)
+                              select new Bills
+                              {
+                                  Id = p.Id,
+                                  NamePass = p.Name,
+                                  PNRNO = p.PNRno,
+                                  Age = p.Age,
+                                  Field = t.Field,
+                                  TrainNo = t.TrainNo,
+                                  Timefrom = t.DepartureTime,
+                                  Seats = c.Seats,
+                                  Status = bt.Status,
+                                  Price = c.Price
+                              }).ToListAsync();
             if (vexe == null)
             {
                 return NotFound();
@@ -99,27 +99,49 @@ namespace SpoorC1810L.Controllers
             var HomeResRult = await (from t in _context.trains
                                      join tr in _context.TrainRoute on t.Id equals tr.TrainId
                                      join c in _context.compartments on t.Id equals c.TrainId
-                                 where (t.Id == id)
-                                 select new Books
-                                 {
-                                     Id = c.Id,
-                                     TrainId = c.TrainId,
-                                     Field = t.Field,
-                                     TrainNo = t.TrainNo,
-                                     TrainName = t.TrainName,
-                                     RouteFromTo = t.RouteFromTo,
-                                     DepartureTime = t.DepartureTime,
-                                     Toa = c.Toa,
-                                     Numcloums = c.Numcloums,
-                                     Numrows = c.Numrows,
-                                     Total = c.Total,
-                                     Range = tr.Range
-                                 }).ToListAsync();
+                                     where (t.Id == id)
+                                     select new Books
+                                     {
+                                         Id = c.Id,
+                                         TrainId = c.TrainId,
+                                         Field = t.Field,
+                                         TrainNo = t.TrainNo,
+                                         TrainName = t.TrainName,
+                                         RouteFromTo = t.RouteFromTo,
+                                         DepartureTime = t.DepartureTime,
+                                         Toa = c.Toa,
+                                         Numcloums = c.Numcloums,
+                                         Numrows = c.Numrows,
+                                         Total = c.Total,
+                                         Range = tr.Range
+                                     }).ToListAsync();
             if (HomeResRult == null)
             {
                 return NotFound();
             }
             return View(HomeResRult);
+        }
+
+        [HttpPost]
+        public IActionResult GetCompart(int id)
+        {
+
+            var Compart = (from c in _context.compartments
+
+                           where (c.Id == id)
+                           select new Books
+                           {
+                               Id = c.Id,
+                               Toa = c.Toa,
+                               Total = c.Total
+                           }).ToList();
+            if (Compart == null)
+            {
+                //return BadRequest(Compart.Error.Message);
+            }
+
+            var serialized = JsonConvert.SerializeObject(Compart);
+            return Content(serialized, "application/json");
         }
 
         [HttpPost]
@@ -141,7 +163,6 @@ namespace SpoorC1810L.Controllers
             return Content(chair, "application/json");
         }
 
-
         [HttpPost]
         public IActionResult CreatePassenger(string name, int age, bool Gender, int total, string Class, int price, int pnrno)
         {
@@ -161,6 +182,7 @@ namespace SpoorC1810L.Controllers
 
             _context.chairs.AddRange(ChairList);
             await _context.SaveChangesAsync();
+
             int chairid = _context.chairs.Max(item => item.Id);
             int passid = _context.passengers.DefaultIfEmpty().Max(r => r == null ? 0 : r.Id);
             var bookings = new BookingTicket[]

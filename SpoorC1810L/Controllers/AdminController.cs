@@ -16,7 +16,8 @@ using TrainC1810L.Models.ModelView;
 
 namespace TrainC1810L.Controllers
 {
-    [Authorize]
+    //[Authorize]
+    [Authorize(Policy = "RequireAdminRole")]
     public class AdminController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -34,19 +35,19 @@ namespace TrainC1810L.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var admin = await (from b in _context.Bill 
-                                 join bk in _context.bookingTickets on b.BookingTicketID equals bk.Id
-                                 join p in _context.passengers on bk.PassengerId equals p.Id
-                                 select new Admin
-                                 {
-                                     Namepass = p.Name,
-                                     Age = p.Age,
-                                     PNRno = p.PNRno,
-                                     Gender = p.Gender,
-                                     MoneyReceived= b.MoneyReceived,
-                                     Refunds = b.Refunds,
-                                     
-                                 }).ToListAsync();
+            var admin = await (from b in _context.Bill
+                               join bk in _context.bookingTickets on b.BookingTicketID equals bk.Id
+                               join p in _context.passengers on bk.PassengerId equals p.Id
+                               select new Admin
+                               {
+                                   Namepass = p.Name,
+                                   Age = p.Age,
+                                   PNRno = p.PNRno,
+                                   Gender = p.Gender,
+                                   MoneyReceived = b.MoneyReceived,
+                                   Refunds = b.Refunds,
+
+                               }).ToListAsync();
             return View(admin);
         }
         public async Task<IActionResult> datve()
@@ -115,12 +116,12 @@ namespace TrainC1810L.Controllers
         public IActionResult GetChair(int idchair)
         {
             var Query = (from c in _context.compartments
-                           join cs in _context.chairs on c.Id equals cs.CompartmentId
-                           where (c.Id == idchair)
-                           select new Chairs
-                           {
-                               Seats = cs.Seats
-                           }).ToList();
+                         join cs in _context.chairs on c.Id equals cs.CompartmentId
+                         where (c.Id == idchair)
+                         select new Chairs
+                         {
+                             Seats = cs.Seats
+                         }).ToList();
             if (Query == null)
             {
                 //return BadRequest(Compart.Error.Message);
@@ -130,7 +131,7 @@ namespace TrainC1810L.Controllers
             return Content(chair, "application/json");
         }
         [HttpPost]
-        public IActionResult CreatePassenger(string name, int age, bool Gender, int total, string Class, int price, int pnrno)
+        public IActionResult Passenger(string name, int age, bool Gender, int total, string Class, int pnrno)
         {
             //new Passenger { Name = name, Age = age, Gender = gt, Total = total, Class = info }
             var passenger = new Passenger[]
@@ -143,7 +144,7 @@ namespace TrainC1810L.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateBookChair(List<Chair> ChairList)
+        public async Task<IActionResult> CreateBookChair(List<Chair> ChairList, int price)
         {
 
             _context.chairs.AddRange(ChairList);
@@ -184,12 +185,12 @@ namespace TrainC1810L.Controllers
             return View(query);
         }
         [HttpPost]
-        public async Task<IActionResult> Ticket(int BookingTicketID, int chairId, int passengerId)
+        public async Task<IActionResult> Ticket(int BookingTicketID, int chairId, int passengerId, int Total)
         {
             //Id = BookingTicketID,Price = 0,ChairId =chairId, PassengerId =  passengerId, Status = true
             var Booking = new BookingTicket[]
             {
-                new BookingTicket{Id = BookingTicketID,Price = 0,ChairId = chairId, PassengerId =  passengerId, Status = true}
+                new BookingTicket{Id = BookingTicketID,Price = Total,ChairId = chairId, PassengerId =  passengerId, Status = true}
             };
 
             _context.bookingTickets.UpdateRange(Booking);
@@ -201,7 +202,7 @@ namespace TrainC1810L.Controllers
         public async Task<IActionResult> BillResult(int MoneyReceived, int Refunds, int BookingTicketID)
         {
 
-            
+
             //MoneyReceived = MoneyReceived, Refunds = Refunds,TotalMoney=0, BookingTicketID = BookingTicketID
             var bills = new Bill[]
             {
@@ -211,7 +212,7 @@ namespace TrainC1810L.Controllers
             await _context.SaveChangesAsync();
             return Json(bills);
         }
-       
+
         public IActionResult CreateRole()
         {
             return View();
@@ -226,23 +227,56 @@ namespace TrainC1810L.Controllers
             }
             return View();
         }
-        public async Task<ActionResult> ListUser()
+        [HttpGet]
+        public async Task<IActionResult> ListUser()
         {
-            var users = await _userManager.Users.ToListAsync();
+            var users = await (from u in _userManager.Users
+                               join ur in _context.UserRoles on u.Id equals ur.UserId
+                               join r in _roleManager.Roles on ur.RoleId equals r.Id
+                               select new ApplicationUser
+                               {
+                                   Id = u.Id,
+                                   UserName = u.UserName,
+                                   Name = r.Name,
+                                   EmailConfirmed = u.EmailConfirmed
+                               }).ToListAsync();
             return View(users);
+        }
+        [HttpGet]
+        public async Task<IActionResult> UpdateEmail(string id)
+        {
+            var ApUser = await _userManager.FindByIdAsync(id);
+            if (ApUser != null)
+            {
+                ApUser.EmailConfirmed = true;
+
+                var result = await _userManager.UpdateAsync(ApUser);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListUser");
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+            }
+            return View();
+        }
+
+
+        public IActionResult StationTrain()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ShowStation(string MaTau)
+        {
+            return View("ShowLichTrinh", await _context.TrainRoute.Include(p => p.train).Include(p => p.station)
+               .Where(t => t.train.TrainName.Contains(MaTau)).OrderBy(p => p.DepartureTimeTo).ToListAsync());
         }
     }
 }
-
-//var ListOfChair = new JavaScriptSerializer().Deserialize<Chair>(json);
-//IEnumerable<Chair>  listOfChair
-//, string name, int age, bool gt, int total, string info, int price
-////Seats = seats , CompartmentId = CompartmentIds
-//var chair = new Chair[]
-//{
-//    new Chair{ Seats = seats , CompartmentId = compartmentId}
-//};
-//ChairList.ForEach(n => _context.chairs.Add(n));
-//_context.SaveChangesAsync();
-//int passid = _context.passengers.Max(item => item.Id);
-////Price=price, PassengerId= passid ,ChairId= chairid

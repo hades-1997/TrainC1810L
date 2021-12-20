@@ -14,9 +14,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>
@@ -31,9 +28,6 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
             <td>
                 @if (item.Status) {<span>Thành công</span> } else {<span>Chưa Thanh Toán</span> }
                 @*@Html.DisplayFor(modelItem => item.Status)*@

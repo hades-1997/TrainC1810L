@@ -53,8 +53,8 @@ namespace SpoorC1810L.Controllers
         // GET: TrainRoutes/Create
         public IActionResult Create()
         {
-            ViewData["StationId"] = new SelectList(_context.stations, "Id", "Id");
-            ViewData["TrainId"] = new SelectList(_context.trains, "Id", "Id");
+            ViewData["StationId"] = new SelectList(_context.stations, "Id", "Name");
+            ViewData["TrainId"] = new SelectList(_context.trains, "Id", "RouteFromTo");
             return View();
         }
 
@@ -166,5 +166,7 @@ namespace SpoorC1810L.Controllers
         {
             return _context.TrainRoute.Any(e => e.Id == id);
         }
+
+
     }
 }

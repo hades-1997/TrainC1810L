@@ -1,0 +1,14 @@
+﻿@{
+    Layout = "~/Views/Shared/_SiderBar.cshtml";
+}
+
+<h1>StationTrain</h1>
+<br />
+<div class="col-md-6 col-sm-8 clearfix">
+    <div class="search-box pull-left">
+        <form method="POST" asp-action="ShowStation">
+            <input type="text" name="MaTau" placeholder="Vui Lòng Nhập Mã Tàu" required="">
+            <button type="submit"><i class="ti-search"></i></button>
+        </form>
+    </div>
+</div>

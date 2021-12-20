@@ -1,0 +1,129 @@
+﻿/*Các bạn chèn font của GG*/
+@import url(https://fonts.googleapis.com/css?family=Merriweather+Sans);
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    min-height: 100%;
+}
+
+body {
+    text-align: center;
+    background: #689976;
+    background: linear-gradient(#689976, #ACDACC);
+    font-family: 'Merriweather Sans', arial, verdana;
+}
+
+.breadcrumb {
+    /*display: inline-block;*/
+    /*box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);*/
+    overflow: hidden;
+    border-radius: 5px;
+    /* Cho phép thêm số cho mỗi liên kết bằng cách sử dụng bộ đếm CSS. cờ là tên của bộ đếm. được xác định bằng cách sử dụng đặt lại ngược trong phần tử mẹ của các liên kết */
+    counter-reset: flag;
+}
+
+    .breadcrumb a {
+        text-decoration: none;
+        outline: none;
+        display: block;
+        float: left;
+        font-size: 12px;
+        line-height: 36px;
+        color: white;
+        /*Cần thêm lề ở bên trái của các liên kết để chứa các số*/
+        padding: 0 10px 0 60px;
+        background: #666;
+        background: linear-gradient(#666, #333);
+        position: relative;
+    }
+        /*Vì liên kết đầu tiên không có hình tam giác trước nó, chúng tôi có thể giảm phần đệm bên trái để làm cho nó nhất quán với các liên kết khác*/
+        .breadcrumb a:first-child {
+            padding-left: 46px;
+            border-radius: 5px 0 0 5px; /*Để phù hợp với bán kính của thằng cha*/
+        }
+
+            .breadcrumb a:first-child:before {
+                left: 14px;
+            }
+
+        .breadcrumb a:last-child {
+            border-radius: 0 5px 5px 0; /*Cái này là để tránh xê lệch khi di chuột*/
+            padding-right: 20px;
+        }
+
+        /*Di chuột*/
+        .breadcrumb a.active, .breadcrumb a:hover {
+            background: #333;
+            background: linear-gradient(#333, #000);
+        }
+
+            .breadcrumb a.active:after, .breadcrumb a:hover:after {
+                background: #333;
+                background: linear-gradient(135deg, #333, #000);
+            }
+
+        /*Thêm các mũi tên cho breadcrumbs bằng cách sử dụng các phần tử giả được xoay*/
+        .breadcrumb a:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -18px; /*Một nửa chiều dài của hình vuông*/
+            /*Cùng kích thước với chiều cao dòng của .breadcrumb a*/
+            width: 36px;
+            height: 36px;
+            /*như bạn thấy hình vuông được xoay có chiều cao lớn hơn. điều này làm cho nó khó khăn để đặt nó đúng cách. Vì vậy, chúng tôi sẽ thu nhỏ nó để các đường chéo trở nên bằng với chiều cao dòng của liên kết. Chúng tôi chia tỷ lệ nó thành 70,7% bởi vì nếu hình vuông: chiều dài = 1; đường chéo = (1 ^ 2 + 1 ^ 2) ^ 0,5 = 1,414 (định lý pythagoras)
+	nếu đường chéo yêu cầu = 1; chiều dài = 1 / 1.414 = 0.707*/
+            transform: scale(0.707) rotate(45deg);
+            /*chúng ta cần ngăn các mũi tên bị đè dưới liên kết tiếp theo*/
+            z-index: 1;
+            /*nền giống như các liên kết nhưng gradient sẽ được xoay để bù lại với biến đổi được áp dụng*/
+            background: #666;
+            background: linear-gradient(135deg, #666, #333);
+            /*thiết kế mũi tên sử dụng tông bóng hộp*/
+            box-shadow: 2px -2px 0 2px rgba(0, 0, 0, 0.4), 3px -3px 0 2px rgba(255, 255, 255, 0.1);
+            /*
+		5px - cho các mũi tên tròn và
+		50px - để ngăn chặn sự cố khi di chuột trên đường viền được tạo bằng cách sử dụng bóng*/
+            border-radius: 0 5px 0 50px;
+        }
+        /*Chúng ta không cần mũi tên sau liên kết cuối cùng*/
+        .breadcrumb a:last-child:after {
+            content: none;
+        }
+        /*Chúng ta sẽ sử dụng phần tử: before để hiển thị số*/
+        .breadcrumb a:before {
+            content: counter(flag);
+            counter-increment: flag;
+            border-radius: 100%;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            margin: 8px 0;
+            position: absolute;
+            top: 0;
+            left: 30px;
+            background: #444;
+            background: linear-gradient(#444, #222);
+            font-weight: bold;
+        }
+
+
+.flat a, .flat a:after {
+    background: white;
+    color: black;
+    transition: all 0.5s;
+}
+
+    .flat a:before {
+        background: white;
+        box-shadow: 0 0 0 1px #ccc;
+    }
+
+    .flat a:hover, .flat a.active,
+    .flat a:hover:after, .flat a.active:after {
+        background: #9EEB62;
+    }

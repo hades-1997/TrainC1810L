@@ -174,7 +174,7 @@
         $.ajax({
             type: "POST",
             dataType: "json",
-            url: "/Admin/GetCompart",
+            url: "/Home/GetCompart",
             data: { id: $("#compartment").val() },
             success: function (data) {
                 alert("Vui Lòng Chọn Ghế Ngồi");
@@ -182,12 +182,12 @@
                     var totalrows = item.Total;
                     var chairc = item.Id;
                     var Toa = item.Toa;
-                    var A = 10000 * range;
-                    var B = 11000 * range;
-                    var C = 12000 * range;
-                    var D = 13000 * range;
-                    var E = 14000 * range;
-                    var F = 15000 * range;
+                    var A = 1000 * range;
+                    var B = 1100 * range;
+                    var C = 1200 * range;
+                    var D = 1300 * range;
+                    var E = 1400 * range;
+                    var F = 1500 * range;
                     $.ajax({
                         type: "POST",
                         dataType: "json",
@@ -375,6 +375,7 @@
         }
         var Chair = {
             ChairList: ListOfChair
+
         }
         $.ajax({
             type: "POST",

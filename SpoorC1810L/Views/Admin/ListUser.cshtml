@@ -1,0 +1,53 @@
+﻿@model IEnumerable<TrainC1810L.Models.ApplicationUser>
+
+@{
+    ViewData["Title"] = "ListUser";
+    Layout = "~/Views/Shared/_SiderBar.cshtml";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Email
+            </th>
+            <th>
+                Chức Danh
+            </th>
+            <th>Trạng Thái</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @if (item.EmailConfirmed == true)
+                {
+                    <p>Hoạt động</p>
+                }
+                else
+                {
+                    <p>Chưa Kích Hoạt</p>
+                }
+            </td>
+            <td>
+                @if (item.EmailConfirmed == true)
+                {
+
+                }
+                else
+                {
+                    <a asp-action="UpdateEmail" asp-route-id="@item.Id">Active</a>
+                }
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
